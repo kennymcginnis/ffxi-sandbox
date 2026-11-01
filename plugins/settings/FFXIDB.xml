@@ -1,0 +1,31 @@
+<settings>
+    <global>
+        <X>0</X>
+        <Y>0</Y>
+        <Opacity>75</Opacity>
+        <ShowPC>true</ShowPC>
+        <ColorPC>#FF006FB8</ColorPC>
+        <ShowNPC>true</ShowNPC>
+        <ColorNPC>#FF269D49</ColorNPC>
+        <ShowMob>true</ShowMob>
+        <ColorMob>#FFED1A20</ColorMob>
+        <ShowMarker>true</ShowMarker>
+        <ColorMarker>#FFB646AD</ColorMarker>
+        <ShowTargetLine>true</ShowTargetLine>
+        <Ranges />
+        <Scale>1</Scale>
+        <ZoomDefault>-10</ZoomDefault>
+    </global>
+    <Taylormade>
+        <X>1359</X>
+        <Y>816</Y>
+    </Taylormade>
+    <Counterpunch>
+        <X>1624</X>
+        <Y>712</Y>
+    </Counterpunch>
+    <Socoxak>
+        <X>1306</X>
+        <Y>834</Y>
+    </Socoxak>
+</settings>

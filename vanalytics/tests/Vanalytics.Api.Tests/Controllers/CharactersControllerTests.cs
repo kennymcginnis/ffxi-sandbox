@@ -1,0 +1,286 @@
+using System.Net;
+using System.Net.Http.Headers;
+using System.Net.Http.Json;
+using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Testcontainers.MsSql;
+using Soverance.Auth.DTOs;
+using Vanalytics.Core.DTOs.Characters;
+using Vanalytics.Core.DTOs.Keys;
+using Vanalytics.Core.DTOs.Sync;
+using Vanalytics.Data;
+
+namespace Vanalytics.Api.Tests.Controllers;
+
+public class CharactersControllerTests : IAsyncLifetime
+{
+    private readonly MsSqlContainer _container = new MsSqlBuilder("mcr.microsoft.com/mssql/server:2022-latest").Build();
+    private WebApplicationFactory<Program> _factory = null!;
+    private HttpClient _client = null!;
+
+    public async Task InitializeAsync()
+    {
+        await _container.StartAsync();
+        _factory = new WebApplicationFactory<Program>()
+            .WithWebHostBuilder(builder =>
+            {
+                builder.ConfigureServices(services =>
+                {
+                    var desc = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<VanalyticsDbContext>));
+                    if (desc != null) services.Remove(desc);
+                    services.AddDbContext<VanalyticsDbContext>(o => o.UseSqlServer(_container.GetConnectionString()));
+                });
+                builder.ConfigureAppConfiguration((_, config) =>
+                {
+                    config.AddInMemoryCollection(new Dictionary<string, string?>
+                    {
+                        ["Jwt:Secret"] = "TestSecretKeyThatIsAtLeast32BytesLongForHmacSha256!!",
+                        ["Jwt:Issuer"] = "VanalyticsTest",
+                        ["Jwt:Audience"] = "VanalyticsTest",
+                        ["Jwt:AccessTokenExpirationMinutes"] = "15",
+                        ["Jwt:RefreshTokenExpirationDays"] = "7"
+                    });
+                });
+            });
+        _client = _factory.CreateClient();
+    }
+
+    public async Task DisposeAsync()
+    {
+        _client.Dispose();
+        await _factory.DisposeAsync();
+        await _container.DisposeAsync();
+    }
+
+    private async Task<string> CreateUserAndGetTokenAsync(string email, string username, string password = "Password123!")
+    {
+        using var scope = _factory.Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<VanalyticsDbContext>();
+
+        var user = new Soverance.Auth.Models.User
+        {
+            Id = Guid.NewGuid(),
+            Email = email,
+            Username = username,
+            PasswordHash = Soverance.Auth.Services.PasswordHasher.HashPassword(password),
+            CreatedAt = DateTimeOffset.UtcNow,
+            UpdatedAt = DateTimeOffset.UtcNow
+        };
+        db.Users.Add(user);
+        await db.SaveChangesAsync();
+
+        var response = await _client.PostAsJsonAsync("/api/auth/login", new LoginRequest
+        {
+            Email = email,
+            Password = password
+        });
+        var auth = await response.Content.ReadFromJsonAsync<AuthResponse>();
+        return auth!.AccessToken;
+    }
+
+    private HttpRequestMessage Authed(HttpMethod method, string url, string token)
+    {
+        var req = new HttpRequestMessage(method, url);
+        req.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        return req;
+    }
+
+    private async Task<(string Token, Guid CharacterId)> SetupUserWithCharacterAsync(
+        string email, string username, string charName)
+    {
+        var token = await CreateUserAndGetTokenAsync(email, username);
+
+        // Generate API key
+        var keyReq = Authed(HttpMethod.Post, "/api/keys/generate", token);
+        var keyResp = await _client.SendAsync(keyReq);
+        var apiKey = (await keyResp.Content.ReadFromJsonAsync<ApiKeyResponse>())!;
+
+        // Sync to auto-create character
+        var syncReq = new HttpRequestMessage(HttpMethod.Post, "/api/sync");
+        syncReq.Headers.Add("X-Api-Key", apiKey.ApiKey);
+        syncReq.Content = JsonContent.Create(new SyncRequest
+        {
+            CharacterName = charName,
+            Server = "Asura",
+            ActiveJob = "WAR",
+            ActiveJobLevel = 75,
+            Jobs = [new SyncJobEntry { Job = "WAR", Level = 75 }]
+        });
+        await _client.SendAsync(syncReq);
+
+        // Get character ID
+        var listResp = await _client.SendAsync(Authed(HttpMethod.Get, "/api/characters", token));
+        var chars = (await listResp.Content.ReadFromJsonAsync<List<CharacterSummaryResponse>>())!;
+        var character = chars.First(c => c.Name == charName);
+
+        return (token, character.Id);
+    }
+
+    [Fact]
+    public async Task ListCharacters_ReturnsOwnCharacters()
+    {
+        var (token, _) = await SetupUserWithCharacterAsync("char3@test.com", "char3user", "ListChar");
+
+        var resp = await _client.SendAsync(Authed(HttpMethod.Get, "/api/characters", token));
+
+        Assert.Equal(HttpStatusCode.OK, resp.StatusCode);
+        var chars = await resp.Content.ReadFromJsonAsync<List<CharacterSummaryResponse>>();
+        Assert.Single(chars!);
+        Assert.Equal("ListChar", chars[0].Name);
+    }
+
+    [Fact]
+    public async Task GetCharacter_OwnerCanAccess()
+    {
+        var (token, charId) = await SetupUserWithCharacterAsync("char4@test.com", "char4user", "DetailChar");
+
+        var resp = await _client.SendAsync(Authed(HttpMethod.Get, $"/api/characters/{charId}", token));
+
+        Assert.Equal(HttpStatusCode.OK, resp.StatusCode);
+        var detail = await resp.Content.ReadFromJsonAsync<CharacterDetailResponse>();
+        Assert.Equal("DetailChar", detail!.Name);
+    }
+
+    [Fact]
+    public async Task GetCharacter_NonOwnerGetsForbidden()
+    {
+        var (_, charId) = await SetupUserWithCharacterAsync("char5a@test.com", "char5auser", "OtherChar");
+        var token2 = await CreateUserAndGetTokenAsync("char5b@test.com", "char5buser");
+
+        var resp = await _client.SendAsync(Authed(HttpMethod.Get, $"/api/characters/{charId}", token2));
+
+        Assert.Equal(HttpStatusCode.Forbidden, resp.StatusCode);
+    }
+
+    [Fact]
+    public async Task UpdateCharacter_TogglesPublic()
+    {
+        var (token, charId) = await SetupUserWithCharacterAsync("char6@test.com", "char6user", "ToggleChar");
+
+        var req2 = Authed(HttpMethod.Put, $"/api/characters/{charId}", token);
+        req2.Content = JsonContent.Create(new UpdateCharacterRequest { IsPublic = true });
+        var resp = await _client.SendAsync(req2);
+
+        Assert.Equal(HttpStatusCode.OK, resp.StatusCode);
+        var updated = await resp.Content.ReadFromJsonAsync<CharacterSummaryResponse>();
+        Assert.True(updated!.IsPublic);
+    }
+
+    [Fact]
+    public async Task DeleteCharacter_Removes()
+    {
+        var (token, charId) = await SetupUserWithCharacterAsync("char7@test.com", "char7user", "DeleteChar");
+
+        var resp = await _client.SendAsync(Authed(HttpMethod.Delete, $"/api/characters/{charId}", token));
+        Assert.Equal(HttpStatusCode.NoContent, resp.StatusCode);
+
+        var getResp = await _client.SendAsync(Authed(HttpMethod.Get, $"/api/characters/{charId}", token));
+        Assert.Equal(HttpStatusCode.NotFound, getResp.StatusCode);
+    }
+
+    [Fact]
+    public async Task WithoutAuth_ReturnsUnauthorized()
+    {
+        var resp = await _client.GetAsync("/api/characters");
+        Assert.Equal(HttpStatusCode.Unauthorized, resp.StatusCode);
+    }
+
+    [Fact]
+    public async Task CharacterDetail_ReturnsSuperiorLevel()
+    {
+        var token = await CreateUserAndGetTokenAsync("char8@test.com", "char8user");
+
+        // Generate API key
+        var keyReq = Authed(HttpMethod.Post, "/api/keys/generate", token);
+        var keyResp = await _client.SendAsync(keyReq);
+        var apiKey = (await keyResp.Content.ReadFromJsonAsync<ApiKeyResponse>())!;
+
+        // Sync to create character with SuperiorLevel = 3
+        var syncReq = new HttpRequestMessage(HttpMethod.Post, "/api/sync");
+        syncReq.Headers.Add("X-Api-Key", apiKey.ApiKey);
+        syncReq.Content = JsonContent.Create(new SyncRequest
+        {
+            CharacterName = "SuChar",
+            Server = "Asura",
+            ActiveJob = "WAR",
+            ActiveJobLevel = 99,
+            SuperiorLevel = 3,
+            Jobs = [new SyncJobEntry { Job = "WAR", Level = 99 }]
+        });
+        await _client.SendAsync(syncReq);
+
+        // Get character ID from list
+        var listResp = await _client.SendAsync(Authed(HttpMethod.Get, "/api/characters", token));
+        var chars = (await listResp.Content.ReadFromJsonAsync<List<CharacterSummaryResponse>>())!;
+        var characterId = chars.First(c => c.Name == "SuChar").Id;
+
+        // Fetch detail and assert SuperiorLevel
+        var resp = await _client.SendAsync(Authed(HttpMethod.Get, $"/api/characters/{characterId}", token));
+        Assert.Equal(HttpStatusCode.OK, resp.StatusCode);
+        var body = await resp.Content.ReadFromJsonAsync<CharacterDetailResponse>();
+        Assert.Equal(3, body!.SuperiorLevel);
+    }
+
+    [Fact]
+    public async Task UpdateCharacter_SetsRole_AndEchoesIt()
+    {
+        var (token, charId) = await SetupUserWithCharacterAsync("role1@test.com", "role1user", "RoleChar");
+
+        var req = Authed(HttpMethod.Put, $"/api/characters/{charId}", token);
+        req.Content = JsonContent.Create(new UpdateCharacterRequest { IsPublic = false, Role = "Main" });
+        var resp = await _client.SendAsync(req);
+
+        Assert.Equal(HttpStatusCode.OK, resp.StatusCode);
+        var updated = await resp.Content.ReadFromJsonAsync<CharacterSummaryResponse>();
+        Assert.Equal("Main", updated!.Role);
+    }
+
+    [Fact]
+    public async Task ListAndDetail_IncludeRole_AfterSet()
+    {
+        var (token, charId) = await SetupUserWithCharacterAsync("role2@test.com", "role2user", "RoleChar2");
+
+        var put = Authed(HttpMethod.Put, $"/api/characters/{charId}", token);
+        put.Content = JsonContent.Create(new UpdateCharacterRequest { IsPublic = false, Role = "mule" }); // case-insensitive
+        await _client.SendAsync(put);
+
+        var listResp = await _client.SendAsync(Authed(HttpMethod.Get, "/api/characters", token));
+        var chars = await listResp.Content.ReadFromJsonAsync<List<CharacterSummaryResponse>>();
+        Assert.Equal("Mule", chars!.First(c => c.Id == charId).Role);
+
+        var detailResp = await _client.SendAsync(Authed(HttpMethod.Get, $"/api/characters/{charId}", token));
+        var detail = await detailResp.Content.ReadFromJsonAsync<CharacterDetailResponse>();
+        Assert.Equal("Mule", detail!.Role);
+    }
+
+    [Fact]
+    public async Task UpdateCharacter_UnknownRole_ReturnsBadRequest()
+    {
+        var (token, charId) = await SetupUserWithCharacterAsync("role3@test.com", "role3user", "RoleChar3");
+
+        var req = Authed(HttpMethod.Put, $"/api/characters/{charId}", token);
+        req.Content = JsonContent.Create(new UpdateCharacterRequest { IsPublic = false, Role = "Overlord" });
+        var resp = await _client.SendAsync(req);
+
+        Assert.Equal(HttpStatusCode.BadRequest, resp.StatusCode);
+    }
+
+    [Fact]
+    public async Task PublicProfile_DoesNotExposeRole()
+    {
+        var (token, charId) = await SetupUserWithCharacterAsync("role4@test.com", "role4user", "RolePub");
+
+        // Set a role AND make the character public.
+        var put = Authed(HttpMethod.Put, $"/api/characters/{charId}", token);
+        put.Content = JsonContent.Create(new UpdateCharacterRequest { IsPublic = true, Role = "Main" });
+        await _client.SendAsync(put);
+
+        // Anonymous public profile fetch — role must stay "None" (owner-only).
+        var pub = await _client.GetAsync("/api/profiles/Asura/RolePub");
+        Assert.Equal(HttpStatusCode.OK, pub.StatusCode);
+        var detail = await pub.Content.ReadFromJsonAsync<CharacterDetailResponse>();
+        Assert.Equal("None", detail!.Role);
+    }
+}

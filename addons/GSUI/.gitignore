@@ -1,0 +1,30 @@
+# Icon cache (generated at runtime from FFXI DAT files)
+cache/
+
+# User settings (generated per-character). Don't blanket-exclude data/
+# because we also ship static lookup tables there; instead enumerate the
+# runtime-generated patterns explicitly.
+data/settings.xml
+data/*_settings.xml
+data/inv_cache_*.lua
+data/Kalitzo*
+data/*-character.json
+
+# Backups
+backup/
+backup_old/
+
+# Editor swap/temp files
+*.swp
+*.swo
+*~
+*.bak
+
+# OS files
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Runtime breadcrumb log (written by gsui.lua dbg() during gameplay).
+# Useful for diagnosis but reset on every addon load -- never commit.
+debug.log

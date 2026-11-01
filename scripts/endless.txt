@@ -1,0 +1,18 @@
+--input /ma "Pollen" <me>
+--input /ma "Foot Kick"
+--input /ma "Blizzard II"
+--input /ma "Thunder II"
+input /ja "Samurai Roll" <me>
+wait 26
+--input /ma "Army's Paeon VI"
+input /ma "Valor Minuet V"
+wait 26
+input /ja "Samurai Roll" <me>
+wait 26
+input /ma "Advancing March"
+wait 26
+input /ja "Samurai Roll" <me>
+wait 26
+input /ma "Victory March"
+wait 26
+--exec endless.txt

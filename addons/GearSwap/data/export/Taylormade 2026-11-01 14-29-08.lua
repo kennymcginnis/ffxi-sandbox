@@ -1,0 +1,18 @@
+sets.default = {
+    main="Yataghan",
+    sub="Gully",
+    range="Lightning Bow +1",
+    ammo="Scorpion Arrow",
+    head="Aurore Beret",
+    body="Aurore Doublet",
+    hands="Aurore Gloves",
+    legs="Aurore Brais",
+    feet="Aurore Gaiters",
+    neck="Sanctity necklace",
+    waist="Swift Belt",
+    left_ear="Suppanomimi",
+    right_ear="Brutal Earring",
+    left_ring="Echad Ring",
+    right_ring="Rajas Ring",
+    back="Bushido Cape",
+}

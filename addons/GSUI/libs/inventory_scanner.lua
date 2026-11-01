@@ -1,0 +1,1065 @@
+local res = require('resources')
+local extdata = require('extdata')
+local packets = require('packets')
+
+local inventory_scanner = {}
+
+local bag_ids = {
+    inventory = 0,
+    safe      = 1,
+    storage   = 2,
+    locker    = 4,
+    satchel   = 5,
+    sack      = 6,
+    case      = 7,
+    wardrobe  = 8,
+    safe2     = 9,
+    wardrobe2 = 10,
+    wardrobe3 = 11,
+    wardrobe4 = 12,
+    wardrobe5 = 13,
+    wardrobe6 = 14,
+    wardrobe7 = 15,
+    wardrobe8 = 16,
+}
+
+local bag_names_ordered = {
+    'inventory', 'wardrobe', 'wardrobe2', 'wardrobe3', 'wardrobe4',
+    'wardrobe5', 'wardrobe6', 'wardrobe7', 'wardrobe8',
+    'satchel', 'sack', 'case',
+}
+
+local all_bag_names_ordered = {
+    'inventory', 'wardrobe', 'wardrobe2', 'wardrobe3', 'wardrobe4',
+    'wardrobe5', 'wardrobe6', 'wardrobe7', 'wardrobe8',
+    'satchel', 'sack', 'case',
+    'safe', 'safe2', 'storage', 'locker',
+}
+
+local equipment_slots = {
+    [0]  = 'main',
+    [1]  = 'sub',
+    [2]  = 'range',
+    [3]  = 'ammo',
+    [4]  = 'head',
+    [5]  = 'body',
+    [6]  = 'hands',
+    [7]  = 'legs',
+    [8]  = 'feet',
+    [9]  = 'neck',
+    [10] = 'waist',
+    [11] = 'left_ear',
+    [12] = 'right_ear',
+    [13] = 'left_ring',
+    [14] = 'right_ring',
+    [15] = 'back',
+}
+
+local cached_equipment = {}
+local cached_inventory = {}
+local last_scan_time = 0
+
+function inventory_scanner.get_bag_names()
+    return bag_names_ordered
+end
+
+function inventory_scanner.get_bag_id(bag_name)
+    return bag_ids[bag_name]
+end
+
+function inventory_scanner.get_slot_name(slot_id)
+    return equipment_slots[slot_id]
+end
+
+function inventory_scanner.get_slot_names()
+    return equipment_slots
+end
+
+function inventory_scanner.get_all_bag_ids()
+    return bag_ids
+end
+
+function inventory_scanner.get_all_bag_names()
+    return all_bag_names_ordered
+end
+
+function inventory_scanner.get_bag_capacity(bag_name)
+    local items_data = windower.ffxi.get_items()
+    if not items_data or not items_data[bag_name] then return 0, 0 end
+    local bag = items_data[bag_name]
+    local mx = bag.max or 80
+    local used = 0
+    for i = 1, mx do
+        if bag[i] and bag[i].id and bag[i].id ~= 0 then used = used + 1 end
+    end
+    return used, mx
+end
+
+function inventory_scanner.decode_augments(item_tab)
+    if not item_tab or not item_tab.extdata then return nil end
+    local ok, decoded = pcall(extdata.decode, item_tab)
+    if ok and decoded and decoded.augments then
+        local valid = {}
+        for _, aug in pairs(decoded.augments) do
+            if aug and aug ~= 'none' then
+                table.insert(valid, aug)
+            end
+        end
+        if #valid > 0 then return valid end
+    end
+    return nil
+end
+
+function inventory_scanner.get_item_info(item_tab)
+    if not item_tab or not item_tab.id or item_tab.id == 0 then
+        return nil
+    end
+    local item_res = res.items[item_tab.id]
+    if not item_res then return nil end
+
+    -- Description comes from a separate resource table (res.item_descriptions)
+    local desc = ''
+    local ok_desc, desc_tbl = pcall(function() return res.item_descriptions[item_tab.id] end)
+    if ok_desc and desc_tbl then
+        local d = desc_tbl.en or desc_tbl.english or ''
+        if type(d) == 'string' then desc = d end
+    end
+
+    local info = {
+        id = item_tab.id,
+        name = item_res.english or item_res.en or 'Unknown',
+        name_log = item_res.english_log or item_res.en_log or '',
+        count = item_tab.count or 1,
+        status = item_tab.status or 0,
+        description = desc,
+        category = item_res.category or '',
+        level = item_res.level or 0,
+        item_level = item_res.item_level or 0,
+        jobs = {},
+        job_ids = {},
+        slots = {},
+        flags = item_res.flags or {},
+        type = item_res.type or 0,
+        skill = item_res.skill or 0,
+        damage = item_res.damage or 0,
+        delay = item_res.delay or 0,
+        shield_size = item_res.shield_size or 0,
+        targets = item_res.targets or 0,
+        cast_time = item_res.cast_time or 0,
+        superior_level = item_res.superior_level or 0,
+        extdata = item_tab.extdata,
+        augments = nil,
+        bag_name = nil,
+        bag_index = nil,
+    }
+
+    if item_res.jobs then
+        for job_id = 1, 23 do
+            if item_res.jobs[job_id] then
+                info.job_ids[job_id] = true
+                local job = res.jobs[job_id]
+                if job then
+                    table.insert(info.jobs, job.ens or job.english_short or '')
+                end
+            end
+        end
+    end
+
+    if item_res.slots then
+        for slot_id in item_res.slots:it() do
+            local slot_name = equipment_slots[slot_id]
+            if slot_name then
+                table.insert(info.slots, slot_name)
+            end
+        end
+    end
+
+    info.augments = inventory_scanner.decode_augments(item_tab)
+
+    return info
+end
+
+function inventory_scanner.scan_equipment()
+    local result = {}
+    local items = windower.ffxi.get_items()
+    if not items then return result end
+    local equipment = items.equipment
+
+    for slot_id = 0, 15 do
+        local slot_name = equipment_slots[slot_id]
+        local bag_id = equipment[slot_name .. '_bag']
+        local inv_index = equipment[slot_name]
+
+        result[slot_name] = { slot_id = slot_id, slot_name = slot_name, item = nil }
+
+        if inv_index and inv_index ~= 0 and bag_id then
+            local ok, item_tab = pcall(windower.ffxi.get_items, bag_id, inv_index)
+            if ok and item_tab and item_tab.id ~= 0 then
+                local info = inventory_scanner.get_item_info(item_tab)
+                if info then
+                    info.bag_id = bag_id
+                    info.bag_index = inv_index
+                    for bname, bid in pairs(bag_ids) do
+                        if bid == bag_id then
+                            info.bag_name = bname
+                            break
+                        end
+                    end
+                    result[slot_name].item = info
+                end
+            end
+        end
+    end
+
+    cached_equipment = result
+    return result
+end
+
+function inventory_scanner.scan_bag(bag_name)
+    local items_data = windower.ffxi.get_items()
+    if not items_data then return {} end
+
+    local bag = items_data[bag_name]
+    if not bag then return {} end
+
+    local result = {}
+    local max_slots = bag.max or 80
+
+    for i = 1, max_slots do
+        local item_tab = bag[i]
+        if item_tab and item_tab.id and item_tab.id ~= 0 then
+            local info = inventory_scanner.get_item_info(item_tab)
+            if info then
+                info.bag_name = bag_name
+                info.bag_index = i
+                info.bag_id = bag_ids[bag_name]
+                table.insert(result, info)
+            end
+        end
+    end
+
+    return result
+end
+
+function inventory_scanner.scan_all_bags()
+    local result = {}
+    for _, bag_name in ipairs(bag_names_ordered) do
+        result[bag_name] = inventory_scanner.scan_bag(bag_name)
+    end
+    cached_inventory = result
+    last_scan_time = os.clock()
+    return result
+end
+
+function inventory_scanner.get_cached_equipment()
+    return cached_equipment
+end
+
+function inventory_scanner.get_cached_inventory()
+    return cached_inventory
+end
+
+function inventory_scanner.needs_rescan(interval)
+    interval = interval or 2
+    return (os.clock() - last_scan_time) > interval
+end
+
+local function word_wrap(text, max_chars)
+    max_chars = max_chars or 38
+    if #text <= max_chars then return text end
+    local wrapped = {}
+    local remaining = text
+    while #remaining > max_chars do
+        local break_pos = max_chars
+        -- Find last space within limit
+        for i = max_chars, 1, -1 do
+            if remaining:sub(i, i) == ' ' then
+                break_pos = i
+                break
+            end
+        end
+        table.insert(wrapped, remaining:sub(1, break_pos))
+        remaining = remaining:sub(break_pos + 1)
+    end
+    if #remaining > 0 then
+        table.insert(wrapped, remaining)
+    end
+    return table.concat(wrapped, '\n')
+end
+
+local slot_display_names = {
+    main = 'Main', sub = 'Sub', range = 'Range', ammo = 'Ammo',
+    head = 'Head', body = 'Body', hands = 'Hands', legs = 'Legs', feet = 'Feet',
+    neck = 'Neck', waist = 'Waist', left_ear = 'Ear', right_ear = 'Ear',
+    left_ring = 'Ring', right_ring = 'Ring', back = 'Back',
+}
+
+-- Get deduplicated slot display string for an item
+local function get_slot_display(item_info)
+    if not item_info or not item_info.slots or #item_info.slots == 0 then return nil end
+    local names = {}
+    for _, s in ipairs(item_info.slots) do
+        local d = slot_display_names[s] or s
+        local found = false
+        for _, e in ipairs(names) do
+            if e == d then found = true; break end
+        end
+        if not found then table.insert(names, d) end
+    end
+    return '[' .. table.concat(names, '/') .. ']'
+end
+
+function inventory_scanner.get_slot_display_name(slot_name)
+    return slot_display_names[slot_name] or slot_name
+end
+
+-- =============================================================================
+-- "Enhances X effect" annotation table.
+-- FFXI's item description lines like `Enhances "Fast Cast" effect` never spell
+-- out the numeric value, but the server-side mod IS numeric -- LSB tracks it
+-- and the user asked to surface it in the tooltip whenever the description
+-- itself doesn't.
+--
+-- Maps the effect name (the X in Enhances "X" effect) to the LSB modifier
+-- name that base_stats.lookup returns, plus the suffix to append for display.
+-- We only annotate lines that are missing a number; lines that already show
+-- the value (e.g. `"Fast Cast"+5%` on Sindri) are left alone.
+-- =============================================================================
+local _ENHANCE_TO_LSB = {
+    ['Fast Cast']             = { lsb = 'FASTCAST',                  suffix = '%' },
+    ['Conserve MP']           = { lsb = 'CONSERVE_MP',               suffix = ''  },
+    ['Refresh']               = { lsb = 'REFRESH',                   suffix = ''  },
+    ['Regen']                 = { lsb = 'REGEN',                     suffix = ''  },
+    ['Cure']                  = { lsb = 'CURE_POTENCY',              suffix = '%' },
+    ['Cure Potency']          = { lsb = 'CURE_POTENCY',              suffix = '%' },
+    ['Snapshot']              = { lsb = 'SNAPSHOT',                  suffix = '%' },
+    ['Subtle Blow']           = { lsb = 'SUBTLE_BLOW',               suffix = ''  },
+    ['Quick Magic']           = { lsb = 'FASTCAST',                  suffix = '%' }, -- QM uses same LSB key as FC on many items
+    ['Double Attack']         = { lsb = 'DOUBLE_ATTACK',             suffix = '%' },
+    ['Triple Attack']         = { lsb = 'TRIPLE_ATTACK',             suffix = '%' },
+    ['Critical Hit Rate']     = { lsb = 'CRITHITRATE',               suffix = '%' },
+    ['Magic Burst Damage']    = { lsb = 'MAGIC_BURST_BONUS_CAPPED',  suffix = '%' },
+    ['Magic Attack Bonus']    = { lsb = 'MATT',                      suffix = ''  },
+    ['Treasure Hunter']       = { lsb = 'TH',                        suffix = ''  },
+    ['Store TP']              = { lsb = 'STORETP',                   suffix = ''  },
+}
+
+-- Try to look up a numeric value annotation for an "Enhances X effect" /
+-- "Augments X effect" line. Returns the formatted annotation (e.g. "+2%")
+-- or nil if we don't know.
+local _base_stats_mod
+local function _enhance_value(item_name, effect_name)
+    if not item_name or not effect_name then return nil end
+    local rule = _ENHANCE_TO_LSB[effect_name]
+    if not rule then return nil end
+    _base_stats_mod = _base_stats_mod or require('libs/base_stats')
+    -- base_stats.lookup returns the GSUI-key form with scaling already
+    -- applied. We need the RAW LSB-name value, so reach in once.
+    local raw = _base_stats_mod.raw_lookup and _base_stats_mod.raw_lookup(item_name)
+    if not raw then return nil end
+    local v = raw[rule.lsb]
+    if not v or v == 0 then return nil end
+    -- HASTE_GEAR / DMG family are stored x100 in LSB; FASTCAST is raw integer.
+    -- _ENHANCE_TO_LSB only points at raw-int stats, so no scaling needed here.
+    local sign = (v > 0) and '+' or '-'
+    return sign .. math.abs(v) .. rule.suffix
+end
+
+function inventory_scanner.build_tooltip_text(item_info, highlight_pattern)
+    if not item_info then return '' end
+    local lines = {}
+    local max_chars = 38
+
+    -- Item name
+    table.insert(lines, word_wrap(item_info.name, max_chars))
+
+    -- Always show slot indicator after name
+    local slot_str = get_slot_display(item_info)
+    if slot_str then
+        table.insert(lines, slot_str)
+    end
+
+    -- Full description from item_descriptions resource
+    -- This contains slot type, races, DEF/stats, abilities, etc.
+    if item_info.description and item_info.description ~= '' then
+        for line in item_info.description:gmatch('[^\r\n]+') do
+            local trimmed = line:gsub('%s+$', '')
+            if trimmed ~= '' then
+                -- "Enhances X effect" / "Augments X effect" lines never spell
+                -- out the value; annotate them with the LSB-sourced number.
+                -- Strict match only -- require the word "effect" after the
+                -- quoted name. The fallback `Enhances "X"` without "effect"
+                -- was too greedy and caught lines like
+                -- `Enhances "Cure" Potency +25%` where the value IS shown
+                -- but appears after the spell name rather than after "effect".
+                local effect = trimmed:match('[Ee]nhances%s*"([^"]+)"%s*[Ee]ffect')
+                           or trimmed:match('[Aa]ugments%s*"([^"]+)"%s*[Ee]ffect')
+                if effect then
+                    local annotation = _enhance_value(item_info.name, effect)
+                    if annotation then
+                        -- Only suppress when THIS effect already has a value
+                        -- right next to it -- e.g. `Enhances "X" effect +N%`.
+                        -- Numbers earlier on the line (like MP+30) don't count.
+                        -- Earlier whole-line check was too broad: Loquac.
+                        -- Earring's `MP+30 Enhances "Fast Cast" effect` was
+                        -- getting blocked by the +30 from MP even though the
+                        -- Fast Cast amount itself wasn't shown.
+                        local tail = trimmed:match('[Ee]ffect%s*(.*)$')
+                                  or trimmed:match('"' .. effect:gsub('[%-%.%+%[%]%(%)%%%^%$%?%*]', '%%%0') .. '"(.*)$')
+                                  or ''
+                        if not tail:match('^%s*[+%-]?%d') then
+                            trimmed = trimmed .. '  (' .. annotation .. ')'
+                        end
+                    end
+                end
+                local wrapped = word_wrap(trimmed, max_chars)
+                -- Highlight matching lines if filter active
+                if highlight_pattern then
+                    local pats = type(highlight_pattern) == 'table' and highlight_pattern or {highlight_pattern}
+                    for _, pat in ipairs(pats) do
+                        if trimmed:find(pat) then
+                            wrapped = '>> ' .. wrapped
+                            break
+                        end
+                    end
+                end
+                table.insert(lines, wrapped)
+            end
+        end
+    else
+        -- Weapon skill type
+        local skill_names = {
+            [1] = 'Hand-to-Hand', [2] = 'Dagger', [3] = 'Sword', [4] = 'Great Sword',
+            [5] = 'Axe', [6] = 'Great Axe', [7] = 'Scythe', [8] = 'Polearm',
+            [9] = 'Katana', [10] = 'Great Katana', [11] = 'Club', [12] = 'Staff',
+            [25] = 'Archery', [26] = 'Marksmanship', [27] = 'Throwing',
+        }
+        if item_info.type == 4 and skill_names[item_info.skill] then
+            table.insert(lines, '(' .. skill_names[item_info.skill] .. ')')
+        end
+
+        -- DMG / Delay for weapons
+        if item_info.damage and item_info.damage > 0 then
+            local stat_line = 'DMG:' .. item_info.damage
+            if item_info.delay and item_info.delay > 0 then
+                stat_line = stat_line .. ' Delay:' .. item_info.delay
+            end
+            table.insert(lines, stat_line)
+        end
+    end
+
+    table.insert(lines, '')
+
+    -- Augments
+    if item_info.augments and #item_info.augments > 0 then
+        table.insert(lines, 'Augments:')
+        for _, aug in ipairs(item_info.augments) do
+            local aug_text = ' ' .. word_wrap(aug, max_chars - 1)
+            -- Highlight matching augments if filter active
+            if highlight_pattern then
+                local pats = type(highlight_pattern) == 'table' and highlight_pattern or {highlight_pattern}
+                for _, pat in ipairs(pats) do
+                    if aug:find(pat) then
+                        aug_text = '>> ' .. aug_text
+                        break
+                    end
+                end
+            end
+            table.insert(lines, aug_text)
+        end
+        table.insert(lines, '')
+    end
+
+    -- Job / Level
+    -- jobs / level can be nil when we're rendering a "stub" item that the
+    -- GearTree integration creates for set entries not present in inventory.
+    -- Guard against nil so the tooltip / hover path doesn't spam errors.
+    if item_info.jobs and type(item_info.jobs) == 'table' and #item_info.jobs > 0 then
+        local job_line = 'Lv.' .. tostring(item_info.level or '?') ..
+                         ' ' .. table.concat(item_info.jobs, '/')
+        table.insert(lines, word_wrap(job_line, max_chars))
+    end
+
+    -- Item Level
+    if item_info.item_level and item_info.item_level > 0 then
+        table.insert(lines, '<Item Level: ' .. item_info.item_level .. '>')
+    end
+
+    -- Conflict warning
+    if item_info.conflict_warning then
+        table.insert(lines, '')
+        table.insert(lines, word_wrap(item_info.conflict_warning, max_chars))
+    end
+
+    -- Also in other bags
+    if item_info.also_in then
+        table.insert(lines, '')
+        table.insert(lines, 'Also in:')
+        for _, loc in ipairs(item_info.also_in) do
+            table.insert(lines, '  ' .. loc)
+        end
+    end
+
+    -- Bag (with stack count if this slot holds more than one)
+    if item_info.bag_name then
+        local bag_line = '[' .. item_info.bag_name .. ']'
+        if item_info.count and item_info.count > 1 then
+            bag_line = bag_line .. ' x' .. item_info.count
+        end
+        table.insert(lines, bag_line)
+    end
+
+    -- Cross-bag total — sum every stack of this item across every bag.
+    --
+    -- We read straight from windower.ffxi.get_items() rather than from
+    -- cached_inventory because gsui.lua scans bags one-at-a-time via
+    -- scan_bag() and never calls scan_all_bags(), so cached_inventory
+    -- stays empty. The raw items table is the game's cached snapshot,
+    -- already in memory, so this is cheap (no Lua object allocation,
+    -- just integer reads).
+    --
+    -- Example: hovering one stack of 12 Remedies with 9 more in another
+    -- bag prints  "Total: 21 (2 stacks)".
+    if item_info.id then
+        local items_raw = windower.ffxi.get_items()
+        local total, stacks = 0, 0
+        if items_raw then
+            for _, bag_name in ipairs(all_bag_names_ordered) do
+                local bag = items_raw[bag_name]
+                if bag then
+                    -- bag.max is the bag capacity; iterate that many
+                    -- slots. Empty slots have id 0 so we skip them.
+                    local max_slot = bag.max or 80
+                    for i = 1, max_slot do
+                        local it = bag[i]
+                        if it and it.id and it.id == item_info.id and it.id ~= 0 then
+                            total = total + (it.count or 1)
+                            stacks = stacks + 1
+                        end
+                    end
+                end
+            end
+        end
+        if total > (item_info.count or 1) then
+            if stacks > 1 then
+                table.insert(lines, 'Total: ' .. total .. ' (' .. stacks .. ' stacks)')
+            else
+                table.insert(lines, 'Total: ' .. total)
+            end
+        end
+    end
+
+    return table.concat(lines, '\n')
+end
+
+-- Master list of all known FFXI stat/ability filters
+local filter_master_list = {
+    -- Melee
+    { name = 'Double Attack',      pattern = '[Dd]ouble [Aa]ttack' },
+    { name = 'Triple Attack',      pattern = '[Tt]riple [Aa]ttack' },
+    { name = 'Store TP',           pattern = '[Ss]tore TP' },
+    { name = 'Dual Wield',         pattern = '[Dd]ual [Ww]ield' },
+    { name = 'Subtle Blow',        pattern = '[Ss]ubtle [Bb]low' },
+    { name = 'Critical Hit',       pattern = '[Cc]ritical' },
+    { name = 'WS Damage',          pattern = '[Ww]eapon [Ss]kill' },
+    { name = 'Skillchain',         pattern = '[Ss]killchain' },
+    { name = 'Kick Attacks',       pattern = '[Kk]ick [Aa]ttack' },
+    { name = 'Martial Arts',       pattern = '[Mm]artial [Aa]rts' },
+    { name = 'Counter',            pattern = '[Cc]ounter' },
+    { name = 'Guard',              pattern = '[Gg]uard' },
+    -- Ranged
+    { name = 'Snapshot',           pattern = '[Ss]napshot' },
+    { name = 'Rapid Shot',         pattern = '[Rr]apid [Ss]hot' },
+    { name = 'Ranged Attack',      pattern = {'[Rr]anged [Aa]tt', 'Rng%.Atk'} },
+    { name = 'Ranged Accuracy',    pattern = {'[Rr]anged [Aa]cc', 'Rng%.Acc'} },
+    { name = 'Recycle',            pattern = '[Rr]ecycle' },
+    { name = 'Barrage',            pattern = '[Bb]arrage' },
+    -- Magic offense
+    { name = 'Magic Atk Bonus',    pattern = '[Mm]ag.*[Aa]tk' },
+    { name = 'Magic Accuracy',     pattern = '[Mm]ag.*[Aa]cc' },
+    { name = 'Magic Damage',       pattern = '[Mm]agic [Dd]amage' },
+    { name = 'Magic Burst',        pattern = '[Mm]agic [Bb]urst' },
+    { name = 'Occult Acumen',      pattern = '[Oo]ccult [Aa]cumen' },
+    -- Casting
+    { name = 'Fast Cast',          pattern = '[Ff]ast [Cc]ast' },
+    { name = 'Quick Magic',        pattern = '[Qq]uick [Mm]agic' },
+    { name = 'Conserve MP',        pattern = '[Cc]onserve MP' },
+    { name = 'Spell Interrupt Down', pattern = '[Ss]pell [Ii]nterrupt' },
+    -- Healing / Cure
+    { name = 'Cure Potency',       pattern = '[Cc]ure.*[Pp]otency' },
+    { name = 'Cure Cast Time',     pattern = {'[Cc]ure.*[Cc]ast.*[Tt]ime', '[Cc]ure.*[Ss]pellcasting'} },
+    { name = 'Healing Magic',      pattern = '[Hh]ealing [Mm]agic' },
+    { name = 'Cursna',             pattern = '[Cc]ursna' },
+    -- Buffing
+    { name = 'Enhancing Duration', pattern = {'[Ee]nhancing.*[Dd]uration', '[Ee]nhance.*[Dd]uration'} },
+    { name = 'Regen Potency',      pattern = '[Rr]egen.*[Pp]otency' },
+    { name = 'Bar Spell Effect',   pattern = '[Bb]ar.*[Ss]pell' },
+    { name = 'Stoneskin',          pattern = '[Ss]toneskin' },
+    { name = 'Phalanx',            pattern = '[Pp]halanx' },
+    -- Enfeebling
+    { name = 'Enfeebling Duration', pattern = '[Ee]nfeebling.*[Dd]uration' },
+    -- Pet / SMN
+    { name = 'BP Delay',           pattern = {'[Bb]lood [Pp]act.*[Dd]elay', '[Bb]lood [Pp]act.*[Rr]ecast'} },
+    { name = 'BP Damage',          pattern = {'[Bb]lood [Pp]act.*[Dd]amage', '[Bb]lood [Pp]act.*DMG'} },
+    { name = 'Avatar',             pattern = '[Aa]vatar' },
+    { name = 'Avatar Perpetuation', pattern = '[Pp]erpetuation' },
+    { name = 'Pet',                pattern = '[Pp]et:' },
+    { name = 'Pet: Haste',         pattern = '[Pp]et:.*[Hh]aste' },
+    { name = 'Pet: Attack',        pattern = '[Pp]et:.*[Aa]ttack' },
+    { name = 'Pet: Accuracy',      pattern = '[Pp]et:.*[Aa]cc' },
+    { name = 'Pet: MAB',           pattern = '[Pp]et:.*[Mm]ag.*[Aa]tk' },
+    { name = 'Pet: Regen',         pattern = '[Pp]et:.*[Rr]egen' },
+    -- BST
+    -- Charm and Reward are ABILITY names, not stat lines, so they get the
+    -- quoted treatment: bare '[Rr]eward' matched every Ambuscade voucher
+    -- ("exchange for Ambuscade rewards") and Arke's Coffer ("a reward for
+    -- vanquishing Arke") -- 106 false hits against 55 real ones. Bare
+    -- '[Cc]harm' matched Solemnity Cape's '"Resist Charm"+15', a different
+    -- ability entirely.
+    { name = 'Charm',              pattern = { quoted = 'Charm'  } },
+    { name = 'Reward',             pattern = { quoted = 'Reward' } },
+    -- BRD
+    { name = 'Song Duration',      pattern = '[Ss]ong.*[Dd]uration' },
+    { name = 'Song Recast',        pattern = '[Ss]ong.*[Rr]ecast' },
+    { name = 'Song Effect',        pattern = '[Ss]ong.*[Ee]ffect' },
+    -- COR
+    { name = 'Phantom Roll',       pattern = '[Pp]hantom [Rr]oll' },
+    { name = 'Quick Draw',         pattern = '[Qq]uick [Dd]raw' },
+    -- DNC
+    { name = 'Waltz Potency',      pattern = '[Ww]altz.*[Pp]otency' },
+    { name = 'Waltz Delay',        pattern = '[Ww]altz.*[Dd]elay' },
+    { name = 'Step',               pattern = '[Ss]tep.*[Aa]cc' },
+    -- RUN
+    { name = 'Elemental Resist',   pattern = '[Ee]lemental [Rr]esist' },
+    { name = 'Rune Enchantment',   pattern = '[Rr]une [Ee]nchant' },
+    -- Magic Skills
+    { name = 'Summoning Magic',    pattern = '[Ss]ummoning [Mm]agic' },
+    { name = 'White Magic Skill',  pattern = '[Ww]hite [Mm]agic' },
+    { name = 'Black Magic Skill',  pattern = '[Bb]lack [Mm]agic' },
+    { name = 'Enfeebling Magic',   pattern = '[Ee]nfeebling' },
+    { name = 'Enhancing Magic',    pattern = '[Ee]nhanc[ei]' },
+    { name = 'Elemental Magic',    pattern = '[Ee]lemental [Mm]agic' },
+    { name = 'Dark Magic',         pattern = '[Dd]ark [Mm]agic' },
+    { name = 'Divine Magic',       pattern = '[Dd]ivine [Mm]agic' },
+    { name = 'Blue Magic Skill',   pattern = '[Bb]lue [Mm]agic' },
+    { name = 'Ninjutsu',           pattern = '[Nn]injutsu' },
+    { name = 'Singing',            pattern = '[Ss]inging' },
+    { name = 'Wind Instrument',    pattern = '[Ww]ind [Ii]nstrument' },
+    { name = 'String Instrument',  pattern = '[Ss]tring [Ii]nstrument' },
+    { name = 'Geomancy',           pattern = '[Gg]eomancy' },
+    { name = 'Handbell',           pattern = '[Hh]andbell' },
+    -- Combat Skills
+    { name = 'Shield Skill',       pattern = '[Ss]hield [Ss]kill' },
+    { name = 'Parrying Skill',     pattern = '[Pp]arrying' },
+    { name = 'Evasion Skill',      pattern = '[Ee]vasion [Ss]kill' },
+    -- Defense
+    { name = 'Enmity',             pattern = '[Ee]nmity' },
+    { name = 'Damage Taken',       pattern = '[Dd]amage [Tt]aken' },
+    { name = 'Phys. Dmg Taken',    pattern = '[Pp]hys.*[Dd]amage [Tt]aken' },
+    { name = 'Mag. Dmg Taken',     pattern = '[Mm]ag.*[Dd]amage [Tt]aken' },
+    { name = 'Magic Evasion',      pattern = '[Mm]ag.*[Ee]va' },
+    { name = 'Magic Defense',      pattern = '[Mm]ag.*[Dd]ef' },
+    -- Utility
+    { name = 'Haste',              pattern = '[Hh]aste' },
+    { name = 'Refresh',            pattern = '[Rr]efresh' },
+    { name = 'Regen',              pattern = '[Rr]egen' },
+    { name = 'Movement Speed',     pattern = '[Mm]ovement [Ss]peed' },
+    { name = 'Treasure Hunter',    pattern = '[Tt]reasure [Hh]unter' },
+    -- Stats
+    { name = 'Attack',             pattern = 'Attack' },
+    { name = 'Accuracy',           pattern = 'Accuracy' },
+    { name = 'STR',                pattern = 'STR' },
+    { name = 'DEX',                pattern = 'DEX' },
+    { name = 'VIT',                pattern = 'VIT' },
+    { name = 'AGI',                pattern = 'AGI' },
+    { name = 'INT',                pattern = 'INT' },
+    { name = 'MND',                pattern = 'MND' },
+    { name = 'CHR',                pattern = 'CHR' },
+}
+
+function inventory_scanner.matches_filter(item_info, pattern)
+    if not pattern then return true end
+    -- Three pattern shapes are supported:
+    --   string                       -- single Lua pattern, scan desc + augs
+    --   table of strings             -- multiple patterns (OR semantics)
+    --   table { name_set = {a,b,...} } -- match by item NAME against a literal
+    --                                   set. Used by the JA-enhance filters
+    --                                   from libs/ja_enhance.lua because the
+    --                                   underlying bonus is on the base item
+    --                                   tooltip, not in any text we can scan.
+    --   table { quoted = 'Reward', name_set = {...} }
+    --                                -- an ability/spell filter. See below.
+    if type(pattern) == 'table' and (pattern.name_set or pattern.quoted) then
+        local target = item_info.name or item_info.english or item_info.en
+        if target and pattern.name_set then
+            for _, n in ipairs(pattern.name_set) do
+                if target == n then return true end
+            end
+        end
+        -- Text side: the name must appear as a COMPLETE QUOTED TOKEN.
+        --
+        -- FFXI always quotes an ability or spell name when gear enhances it
+        -- ('Enhances "Reward" effect', '"Berserk" duration'), and never quotes
+        -- the word when it is ordinary prose. Matching the bare word was the
+        -- bug: "Reward" hit 106 items whose description merely reads "a reward
+        -- for vanquishing Arke" or "Ambuscade rewards", against 55 real ones.
+        --
+        -- The quotes must be part of the search, not just adjacent to it.
+        -- Solemnity Cape carries '"Resist Charm"+15' -- quoted, but a
+        -- DIFFERENT ability. Searching for the literal '"Charm"' does not
+        -- match inside '"Resist Charm"', because the character before Charm
+        -- there is a space, not a quote. Bare-substring matching got this
+        -- wrong too.
+        if pattern.quoted then
+            local needle = '"' .. pattern.quoted .. '"'
+            if item_info.description
+               and item_info.description:find(needle, 1, true) then return true end
+            if item_info.augments then
+                for _, aug in ipairs(item_info.augments) do
+                    if aug:find(needle, 1, true) then return true end
+                end
+            end
+        end
+        return false
+    end
+    local patterns = type(pattern) == 'table' and pattern or {pattern}
+    for _, pat in ipairs(patterns) do
+        if item_info.description and item_info.description:find(pat) then return true end
+        if item_info.augments then
+            for _, aug in ipairs(item_info.augments) do
+                if aug:find(pat) then return true end
+            end
+        end
+    end
+    return false
+end
+
+-- Escape special Lua pattern characters for literal matching
+local function escape_pattern(str)
+    return str:gsub('([%(%)%.%%%+%-%*%?%[%]%^%$])', '%%%1')
+end
+
+-- Every job ability the CURRENT main/sub job can use, by name.
+-- windower.ffxi.get_abilities() already returns exactly the set available for
+-- the equipped job pair, so there is no job-mask arithmetic to get wrong.
+-- Wrapped in pcall so this module stays loadable outside the game (tests).
+local function current_job_abilities()
+    local out = {}
+    local ok, ab = pcall(function() return windower.ffxi.get_abilities() end)
+    if not ok or type(ab) ~= 'table' then return out end
+    for _, list_name in ipairs({'job_abilities', 'job_traits'}) do
+        local list = ab[list_name]
+        if type(list) == 'table' then
+            for _, id in pairs(list) do
+                local a = res.job_abilities and res.job_abilities[id]
+                if a and a.en then out[a.en] = true end
+            end
+        end
+    end
+    return out
+end
+
+-- There is deliberately no spell enumeration here. Listing every castable
+-- spell was tried and removed: it put ~240 entries in the dropdown on WHM
+-- against roughly a dozen that any owned gear could actually match, and a
+-- 15-row menu cannot be navigated at that length. Job abilities stay listed
+-- in full because a job has ten or twenty of them, not hundreds.
+--
+-- Spell-specific gear is still reachable. The description scan above picks
+-- the name straight off the item ('"Cure" potency +22%', '"Regen" effect
+-- duration +26'), so anything your gear actually mentions appears under
+-- Stats with real matches behind it. What is gone is the long tail of
+-- spells nothing you own refers to.
+
+function inventory_scanner.find_active_filters(items, mode)
+    local matched = {}
+    local seen_names = {}
+    -- Check master list
+    for _, filter in ipairs(filter_master_list) do
+        for _, item in ipairs(items) do
+            if inventory_scanner.matches_filter(item, filter.pattern) then
+                table.insert(matched, filter)
+                seen_names[filter.name:lower()] = true
+                break
+            end
+        end
+    end
+
+    -- Auto-detect job ability enhancements from item descriptions
+    local found_abilities = {}
+    for _, item in ipairs(items) do
+        if item.description then
+            for ability in item.description:gmatch('[Ee]nhances "([^"]+)"') do
+                found_abilities[ability] = true
+            end
+            for ability in item.description:gmatch('"([^"]+)" [Dd]uration') do
+                found_abilities[ability] = true
+            end
+            for ability in item.description:gmatch('[Aa]ugments "([^"]+)"') do
+                found_abilities[ability] = true
+            end
+            for ability in item.description:gmatch('"([^"]+)" [Ee]ffect') do
+                found_abilities[ability] = true
+            end
+        end
+        if item.augments then
+            for _, aug in ipairs(item.augments) do
+                for ability in aug:gmatch('[Ee]nhances "([^"]+)"') do
+                    found_abilities[ability] = true
+                end
+                for ability in aug:gmatch('"([^"]+)" [Dd]uration') do
+                    found_abilities[ability] = true
+                end
+            end
+        end
+    end
+    for ability in pairs(found_abilities) do
+        if not seen_names[ability:lower()] then
+            -- quoted, not escape_pattern: see matches_filter for why a bare
+            -- substring made "Reward" match every Ambuscade voucher.
+            table.insert(matched, { name = ability, pattern = { quoted = ability } })
+            -- IMPORTANT: also mark this ability as seen so the JA-enhance
+            -- name lookup below doesn't add a second filter for the same JA.
+            -- Without this, an item with both an "Enhances X" augment AND a
+            -- base bonus mapped in ja_enhance.lua (e.g. Bagua Tunic for
+            -- Bolster) shows up TWICE in the filter list.
+            seen_names[ability:lower()] = true
+        end
+    end
+
+    -- libs/ja_enhance.lua used to feed this list a curated JA -> item map.
+    -- It is no longer consulted, because it is wrong far more often than it
+    -- is right: audited against res/item_descriptions.lua, 689 of its 736
+    -- pairs are contradicted by the item's own description, and only 47 are
+    -- confirmed. It claimed Ebers Mitts enhances "Sacrosanctity"; the item
+    -- actually reads '"Divine Caress"+5'. Filtering for Sacrosanctity
+    -- therefore returned a glove that has nothing to do with it.
+    --
+    -- The premise behind the table was also mistaken. Its header says the
+    -- descriptions are unavailable ("res.items has description = nil") --
+    -- true of res.items, but descriptions live in res.item_descriptions,
+    -- which this scanner already reads and which covers every one of those
+    -- 736 items. The game tells us the truth directly, so ask it instead of
+    -- a hand-maintained copy that can drift.
+
+    -- ------------------------------------------------------------------
+    -- Complete the ability / spell coverage for the CURRENT job.
+    --
+    -- Everything above only surfaces a filter when the player already owns a
+    -- piece that enhances it. That hides most of a job's kit: on WHM, six of
+    -- the ten job abilities had no filter at all, purely because the relic
+    -- (Piety) gear that enhances them isn't owned yet. You cannot go looking
+    -- for gear through a filter that only appears once you already have the
+    -- gear.
+    --
+    -- So: offer every job ability the current main/sub can use, and every
+    -- known spell it can cast, whether or not anything in the bags matches.
+    -- An empty result is a useful answer -- it means "you own nothing for
+    -- this" -- and the entry starts working the moment a piece is acquired.
+    -- ------------------------------------------------------------------
+    local ja_names = current_job_abilities()
+
+    -- Every spell and ability name in the game, so the description scan's
+    -- finds can be judged against the job actually being played.
+    local any_spell, any_ability = {}, {}
+    for _, sp in pairs(res.spells or {}) do
+        if sp.en then any_spell[sp.en] = true end
+    end
+    for _, a in pairs(res.job_abilities or {}) do
+        if a.en then any_ability[a.en] = true end
+    end
+
+    local abilities, stats = {}, {}
+    for _, f in ipairs(matched) do
+        -- A filter the description scan invented, as opposed to one from the
+        -- master stat list. Only these get judged below; the master list is
+        -- hand-written and stays whole, which is why Haste / Refresh / Regen
+        -- survive. Those are stat lines on gear ("Haste+3%"), not the spells
+        -- that share their names.
+        local from_scan = type(f.pattern) == 'table' and f.pattern.quoted
+        if ja_names[f.name] then
+            abilities[#abilities + 1] = f
+        elseif from_scan and any_spell[f.name] then
+            -- A spell name. Dropped: spell-specific gear is already covered by
+            -- the stat filters (Cure Potency, Regen, Refresh ...) and listing
+            -- the spell as well only lengthens a menu that is 15 rows tall.
+        elseif from_scan and any_ability[f.name] then
+            -- Another job's ability. Real gear text, but useless while you are
+            -- not on that job: a WHM has no use for Berserk, Mug or Sentinel
+            -- sitting in the list. It reappears when you change job.
+        else
+            stats[#stats + 1] = f
+        end
+    end
+
+    -- Anything the job can do that wasn't already surfaced above.
+    for name in pairs(ja_names) do
+        if not seen_names[name:lower()] then
+            abilities[#abilities + 1] = { name = name, pattern = { quoted = name } }
+            seen_names[name:lower()] = true
+        end
+    end
+    -- Case-insensitive, so "Sacred Trust" sorts next to "Sacrosanctity"
+    -- instead of after every capitalised entry (Lua's < is byte order, which
+    -- puts every uppercase letter ahead of every lowercase one).
+    local function by_name(a, b) return a.name:lower() < b.name:lower() end
+    table.sort(abilities, by_name)
+    table.sort(stats,     by_name)
+
+    local active = {{ name = 'All', pattern = nil }}
+    local function add_section(label, list)
+        if #list == 0 then return end
+        table.insert(active, { name = label, divider = true })
+        for _, f in ipairs(list) do table.insert(active, f) end
+    end
+    add_section('-- Job Abilities --', abilities)
+    add_section('-- Stats --',         stats)
+    -- Slot filters belong to Organizer mode only -- in GearSwap mode
+    -- the user already has the 16-icon equip grid which they can click
+    -- to filter by slot, so the dropdown should keep its full surface
+    -- area for stat filters (Haste, JA-enhances, etc.). Caller passes
+    -- the current mode; we only append the slot section for organizer.
+    if mode == 'organizer' then
+        -- One entry per equipment slot, in equip-grid order.
+        -- These differ from stat filters in carrying `slot_filter`
+        -- (not `pattern`). gsui.lua's apply_filter treats slot_filter
+        -- as an additional gate on top of any stat filter in effect.
+        -- Ear / Ring use the LEFT variant: matches_slot_filter checks
+        -- if the slot name appears in item.slots; an earring's slots
+        -- is {'left_ear','right_ear'} so 'left_ear' matches anything
+        -- that fits either ear slot. Same story for rings.
+        local slot_entries = {
+            { name = '-- Slots --',        divider = true },
+            { name = '[Main]',  slot_filter = 'main'      },
+            { name = '[Sub]',   slot_filter = 'sub'       },
+            { name = '[Range]', slot_filter = 'range'     },
+            { name = '[Ammo]',  slot_filter = 'ammo'      },
+            { name = '[Head]',  slot_filter = 'head'      },
+            { name = '[Body]',  slot_filter = 'body'      },
+            { name = '[Hands]', slot_filter = 'hands'     },
+            { name = '[Legs]',  slot_filter = 'legs'      },
+            { name = '[Feet]',  slot_filter = 'feet'      },
+            { name = '[Neck]',  slot_filter = 'neck'      },
+            { name = '[Waist]', slot_filter = 'waist'     },
+            { name = '[Ear]',   slot_filter = 'left_ear'  },
+            { name = '[Ring]',  slot_filter = 'left_ring' },
+            { name = '[Back]',  slot_filter = 'back'      },
+        }
+        for _, e in ipairs(slot_entries) do
+            table.insert(active, e)
+        end
+    end
+    return active
+end
+
+function inventory_scanner.can_equip_in_slot(item_info, slot_name)
+    if not item_info or not item_info.slots or not slot_name then return false end
+    for _, s in ipairs(item_info.slots) do
+        if s == slot_name then return true end
+    end
+    return false
+end
+
+function inventory_scanner.matches_slot_filter(item_info, slot_name)
+    if not slot_name then return true end
+    return inventory_scanner.can_equip_in_slot(item_info, slot_name)
+end
+
+function inventory_scanner.is_equippable_by(item_info, job_id, player_level)
+    if not item_info then return false end
+    if not item_info.slots or #item_info.slots == 0 then return false end
+    if not job_id then return false end
+    if not item_info.job_ids or not item_info.job_ids[job_id] then return false end
+    if player_level and item_info.level and item_info.level > player_level then return false end
+    return true
+end
+
+local slot_sort_priority = {
+    main = 1, sub = 2, range = 3, ammo = 4,
+    head = 5, neck = 6, left_ear = 7, right_ear = 7,
+    body = 8, hands = 9, left_ring = 10, right_ring = 10,
+    back = 11, waist = 12, legs = 13, feet = 14,
+}
+
+local weapon_type_priority = {
+    [1] = 1, [2] = 2, [3] = 3, [4] = 4, [5] = 5, [6] = 6,
+    [7] = 7, [8] = 8, [9] = 9, [10] = 10, [11] = 11, [12] = 12,
+    [25] = 13, [26] = 14, [27] = 15,
+}
+
+function inventory_scanner.sort_by_slot(items)
+    table.sort(items, function(a, b)
+        local a_pri = 99
+        local b_pri = 99
+        if a.slots then
+            for _, slot in ipairs(a.slots) do
+                local p = slot_sort_priority[slot]
+                if p and p < a_pri then a_pri = p end
+            end
+        end
+        if b.slots then
+            for _, slot in ipairs(b.slots) do
+                local p = slot_sort_priority[slot]
+                if p and p < b_pri then b_pri = p end
+            end
+        end
+        if a_pri == b_pri then
+            return (a.name or '') < (b.name or '')
+        end
+        return a_pri < b_pri
+    end)
+    return items
+end
+
+local function gear_compare(a, b)
+    local a_pri = 99
+    local b_pri = 99
+    if a.slots then
+        for _, slot in ipairs(a.slots) do
+            local p = slot_sort_priority[slot]
+            if p and p < a_pri then a_pri = p end
+        end
+    end
+    if b.slots then
+        for _, slot in ipairs(b.slots) do
+            local p = slot_sort_priority[slot]
+            if p and p < b_pri then b_pri = p end
+        end
+    end
+    if a_pri ~= b_pri then return a_pri < b_pri end
+    local a_wt = weapon_type_priority[a.skill] or 99
+    local b_wt = weapon_type_priority[b.skill] or 99
+    if a_wt ~= b_wt then return a_wt < b_wt end
+    local a_il = a.item_level or 0
+    local b_il = b.item_level or 0
+    if a_il ~= b_il then return a_il > b_il end
+    local a_el = a.level or 0
+    local b_el = b.level or 0
+    if a_el ~= b_el then return a_el > b_el end
+    return (a.name or '') < (b.name or '')
+end
+
+function inventory_scanner.sort_organized(items, mode)
+    local gear = {}
+    local non_gear = {}
+    for _, item in ipairs(items) do
+        if item.slots and #item.slots > 0 then
+            table.insert(gear, item)
+        else
+            table.insert(non_gear, item)
+        end
+    end
+    table.sort(gear, gear_compare)
+    table.sort(non_gear, function(a, b) return (a.name or '') < (b.name or '') end)
+    local result = {}
+    if mode == 'items_first' then
+        for _, item in ipairs(non_gear) do table.insert(result, item) end
+        for _, item in ipairs(gear) do table.insert(result, item) end
+    else
+        for _, item in ipairs(gear) do table.insert(result, item) end
+        for _, item in ipairs(non_gear) do table.insert(result, item) end
+    end
+    return result
+end
+
+return inventory_scanner

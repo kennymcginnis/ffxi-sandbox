@@ -1,0 +1,19 @@
+<?xml version="1.1" ?>
+<settings>
+    <global>
+        <bg>
+            <alpha>192</alpha>
+        </bg>
+        <flags>
+            <bottom>true</bottom>
+            <right>true</right>
+        </flags>
+        <pos>
+            <x>-150</x>
+            <y>-175</y>
+        </pos>
+        <text>
+            <size>14</size>
+        </text>
+    </global>
+</settings>

@@ -1,0 +1,234 @@
+Organizer loaded at Sun Nov  1 09:39:41 2026
+2026-11-01 09:39:41| Organizer [VERBOSE] Adding Echad Ring in the inventory to the ignore list
+2026-11-01 09:39:41| Organizer [VERBOSE] Adding inventory to the pull list
+2026-11-01 09:39:41| Organizer [VERBOSE] Adding wardrobe7 to the pull list
+2026-11-01 09:39:41| Organizer [VERBOSE] Adding satchel to the pull list
+2026-11-01 09:39:41| Organizer [VERBOSE] Adding wardrobe8 to the pull list
+2026-11-01 09:39:41| Organizer [VERBOSE] Adding wardrobe6 to the pull list
+2026-11-01 09:39:41| Organizer [VERBOSE] Adding wardrobe5 to the pull list
+2026-11-01 09:39:41| Organizer [VERBOSE] Adding sack to the pull list
+2026-11-01 09:39:41| Organizer [VERBOSE] Adding storage to the pull list
+2026-11-01 09:39:41| Organizer [VERBOSE] Adding safe2 to the pull list
+2026-11-01 09:39:41| Organizer [VERBOSE] Adding wardrobe4 to the pull list
+2026-11-01 09:39:41| Organizer [VERBOSE] Adding safe to the pull list
+2026-11-01 09:39:41| Organizer [VERBOSE] Adding wardrobe to the pull list
+2026-11-01 09:39:41| Organizer [VERBOSE] Adding locker to the pull list
+2026-11-01 09:39:41| Organizer [VERBOSE] Adding case to the pull list
+2026-11-01 09:39:41| Organizer [VERBOSE] Adding wardrobe2 to the pull list
+2026-11-01 09:39:41| Organizer [VERBOSE] Adding wardrobe3 to the pull list
+2026-11-01 09:39:41| Organizer [VERBOSE] Adding wardrobe7 to the push list
+2026-11-01 09:39:41| Organizer [VERBOSE] Adding wardrobe8 to the push list
+2026-11-01 09:39:41| Organizer [VERBOSE] Adding storage to the push list
+2026-11-01 09:39:41| Organizer [VERBOSE] Adding locker to the push list
+2026-11-01 09:39:41| Organizer [VERBOSE] Adding safe2 to the push list
+2026-11-01 09:39:41| Organizer [VERBOSE] Adding wardrobe4 to the push list
+2026-11-01 09:39:41| Organizer [VERBOSE] Adding wardrobe6 to the push list
+2026-11-01 09:39:41| Organizer [VERBOSE] Adding wardrobe to the push list
+2026-11-01 09:39:41| Organizer [VERBOSE] Adding safe to the push list
+2026-11-01 09:39:41| Organizer [VERBOSE] Adding wardrobe5 to the push list
+2026-11-01 09:39:41| Organizer [VERBOSE] Adding wardrobe2 to the push list
+2026-11-01 09:39:41| Organizer [VERBOSE] Adding wardrobe3 to the push list
+2026-11-01 09:40:14| Organizer [MSG] Starting...
+2026-11-01 09:40:14| Organizer [VERBOSE] Getting!
+2026-11-01 09:40:14| Organizer [WARN] Warp Ring not found.
+2026-11-01 09:40:14| Organizer [VERBOSE] Got 0 item(s), and failed getting 0 item(s)
+2026-11-01 09:40:14| Organizer [VERBOSE] Moving item! (H. Kindred Crest) from Inventory 15 to Safe 0)
+2026-11-01 09:40:14| Organizer [VERBOSE] Moving item! (Breeze Geode) from Inventory 14 to Safe 1)
+2026-11-01 09:40:14| Organizer [VERBOSE] Moving item! (Land Crab Meat) from Inventory 13 to Safe 2)
+2026-11-01 09:40:14| Organizer [VERBOSE] Moving item! (Kindred's Crest) from Inventory 12 to Safe 3)
+2026-11-01 09:40:14| Organizer [VERBOSE] Moving item! (H.Q. Crab Shell) from Inventory 11 to Safe 4)
+2026-11-01 09:40:14| Organizer [VERBOSE] Moving item! (Crab Shell) from Inventory 10 to Safe 5)
+2026-11-01 09:40:14| Organizer [VERBOSE] Moving item! (Land Crab Meat) from Inventory 9 to Safe 6)
+2026-11-01 09:40:14| Organizer [VERBOSE] Moving item! (Shivite) from Inventory 8 to Safe 7)
+2026-11-01 09:40:14| Organizer [VERBOSE] Moving item! (Garudite) from Inventory 7 to Safe 8)
+2026-11-01 09:40:14| Organizer [VERBOSE] Moving item! (Wind Cluster) from Inventory 6 to Safe 9)
+2026-11-01 09:40:14| Organizer [VERBOSE] Moving item! (Ramuite) from Inventory 5 to Safe 10)
+2026-11-01 09:40:14| Organizer [VERBOSE] Moving item! (Land Crab Meat) from Inventory 4 to Safe 11)
+2026-11-01 09:40:14| Organizer [VERBOSE] Moving item! (Crab Shell) from Inventory 3 to Safe 12)
+2026-11-01 09:40:14| Organizer [VERBOSE] Remainder: 1 Current: 2
+2026-11-01 09:40:14| Organizer [VERBOSE] Getting!
+2026-11-01 09:40:14| Organizer [WARN] Warp Ring not found.
+2026-11-01 09:40:14| Organizer [VERBOSE] Got 0 item(s), and failed getting 0 item(s)
+2026-11-01 09:40:14| Organizer [VERBOSE] No remainder, so we found everything we were looking for!
+2026-11-01 09:40:14| Organizer [MSG] Done! - 2 items matched and 1 items missing!
+2026-11-01 09:40:14| Organizer [VERBOSE] Item Missing: warp ring 
+2026-11-01 09:40:27| Organizer [MSG] Starting...
+2026-11-01 09:40:27| Organizer [VERBOSE] Getting!
+2026-11-01 09:40:27| Organizer [VERBOSE] Got 0 item(s), and failed getting 0 item(s)
+2026-11-01 09:40:27| Organizer [VERBOSE] Moving item! (Land Crab Meat) from Inventory 40 to Safe 75)
+2026-11-01 09:40:27| Organizer [VERBOSE] Moving item! (Carbite) from Inventory 39 to Safe 76)
+2026-11-01 09:40:27| Organizer [VERBOSE] Moving item! (Carrier Crab Crpc.) from Inventory 38 to Safe 77)
+2026-11-01 09:40:27| Organizer [VERBOSE] Moving item! (Carrier Crab Crpc.) from Inventory 37 to Safe 78)
+2026-11-01 09:40:27| Organizer [VERBOSE] Moving item! (S. Kindred Crest) from Inventory 36 to Safe 79)
+2026-11-01 09:40:27| Organizer [VERBOSE] Moving item! (Carrier Crab Crpc.) from Inventory 35 to Safe 2 36)
+2026-11-01 09:40:28| Organizer [VERBOSE] Moving item! (Land Crab Meat) from Inventory 34 to Safe 2 37)
+2026-11-01 09:40:28| Organizer [VERBOSE] Moving item! (Carrier Crab Crpc.) from Inventory 33 to Safe 2 38)
+2026-11-01 09:40:28| Organizer [VERBOSE] Moving item! (Carrier Crab Crpc.) from Inventory 32 to Safe 2 39)
+2026-11-01 09:40:28| Organizer [VERBOSE] Moving item! (Land Crab Meat) from Inventory 31 to Safe 2 40)
+2026-11-01 09:40:28| Organizer [VERBOSE] Moving item! (Carrier Crab Crpc.) from Inventory 30 to Safe 2 41)
+2026-11-01 09:40:28| Organizer [VERBOSE] Moving item! (Carrier Crab Crpc.) from Inventory 29 to Safe 2 42)
+2026-11-01 09:40:28| Organizer [VERBOSE] Moving item! (Fenrite) from Inventory 28 to Safe 2 43)
+2026-11-01 09:40:28| Organizer [VERBOSE] Moving item! (Carrier Crab Crpc.) from Inventory 27 to Safe 2 44)
+2026-11-01 09:40:28| Organizer [VERBOSE] Moving item! (Land Crab Meat) from Inventory 26 to Safe 2 45)
+2026-11-01 09:40:28| Organizer [VERBOSE] Moving item! (Carrier Crab Crpc.) from Inventory 25 to Safe 2 46)
+2026-11-01 09:40:28| Organizer [VERBOSE] Moving item! (Shadow Geode) from Inventory 24 to Safe 2 47)
+2026-11-01 09:40:28| Organizer [VERBOSE] Moving item! (Carrier Crab Crpc.) from Inventory 23 to Safe 2 48)
+2026-11-01 09:40:28| Organizer [VERBOSE] Moving item! (Land Crab Meat) from Inventory 22 to Safe 2 49)
+2026-11-01 09:40:28| Organizer [VERBOSE] Moving item! (Flame Geode) from Inventory 21 to Safe 2 50)
+2026-11-01 09:40:28| Organizer [VERBOSE] Moving item! (Carrier Crab Crpc.) from Inventory 20 to Safe 2 51)
+2026-11-01 09:40:28| Organizer [VERBOSE] Moving item! (Ifritite) from Inventory 19 to Safe 2 52)
+2026-11-01 09:40:28| Organizer [VERBOSE] Moving item! (Land Crab Meat) from Inventory 18 to Safe 2 53)
+2026-11-01 09:40:28| Organizer [VERBOSE] Moving item! (Carrier Crab Crpc.) from Inventory 17 to Safe 2 54)
+2026-11-01 09:40:28| Organizer [VERBOSE] Moving item! (Carrier Crab Crpc.) from Inventory 16 to Safe 2 55)
+2026-11-01 09:40:28| Organizer [VERBOSE] Moving item! (Carrier Crab Crpc.) from Inventory 15 to Safe 2 56)
+2026-11-01 09:40:28| Organizer [VERBOSE] Moving item! (Soil Geode) from Inventory 14 to Safe 2 57)
+2026-11-01 09:40:28| Organizer [VERBOSE] Moving item! (Titanite) from Inventory 13 to Safe 2 58)
+2026-11-01 09:40:28| Organizer [VERBOSE] Moving item! (Land Crab Meat) from Inventory 12 to Safe 2 59)
+2026-11-01 09:40:28| Organizer [VERBOSE] Moving item! (Carrier Crab Crpc.) from Inventory 11 to Safe 2 60)
+2026-11-01 09:40:28| Organizer [VERBOSE] Moving item! (Carrier Crab Crpc.) from Inventory 10 to Safe 2 61)
+2026-11-01 09:40:28| Organizer [VERBOSE] Moving item! (Land Crab Meat) from Inventory 9 to Safe 2 62)
+2026-11-01 09:40:28| Organizer [VERBOSE] Moving item! (Carrier Crab Crpc.) from Inventory 8 to Safe 2 63)
+2026-11-01 09:40:28| Organizer [VERBOSE] Moving item! (Aqua Geode) from Inventory 7 to Safe 2 64)
+2026-11-01 09:40:28| Organizer [VERBOSE] Skipping item: (Linkpearl) because it is an equipped linkshell.
+2026-11-01 09:40:28| Organizer [VERBOSE] Skipping item: (Linkpearl) because it is an equipped linkshell.
+2026-11-01 09:40:28| Organizer [VERBOSE] No remainder, so we found everything we were looking for!
+2026-11-01 09:40:28| Organizer [VERBOSE] Skipping item: (Linkpearl) because it is an equipped linkshell.
+2026-11-01 09:40:28| Organizer [VERBOSE] Skipping item: (Linkpearl) because it is an equipped linkshell.
+2026-11-01 09:40:28| Organizer [MSG] Done! - 7 items matched and 0 items missing!
+2026-11-01 09:59:58| Organizer [MSG] Starting...
+2026-11-01 09:59:58| Organizer [VERBOSE] Getting!
+2026-11-01 09:59:58| Organizer [WARN] Echad Ring not found.
+2026-11-01 09:59:58| Organizer [WARN] Warp Ring not found.
+2026-11-01 09:59:58| Organizer [WARN] Shneddick Ring not found.
+2026-11-01 09:59:58| Organizer [VERBOSE] Got 0 item(s), and failed getting 0 item(s)
+2026-11-01 09:59:58| Organizer [VERBOSE] Moving item! (Vegetable Seeds) from Inventory 11 to Safe 2 65)
+2026-11-01 09:59:58| Organizer [VERBOSE] Moving item! (Ice Crystal) from Inventory 10 to Safe 2 66)
+2026-11-01 09:59:58| Organizer [VERBOSE] Moving item! (Grain Seeds) from Inventory 9 to Safe 2 67)
+2026-11-01 09:59:58| Organizer [VERBOSE] Moving item! (Light Crystal) from Inventory 8 to Safe 2 68)
+2026-11-01 09:59:58| Organizer [VERBOSE] Moving item! (Titanictus) from Inventory 7 to Safe 2 69)
+2026-11-01 09:59:58| Organizer [VERBOSE] Skipping item: (Linkpearl) because it is an equipped linkshell.
+2026-11-01 09:59:58| Organizer [VERBOSE] Skipping item: (Linkpearl) because it is an equipped linkshell.
+2026-11-01 09:59:58| Organizer [VERBOSE] Remainder: 3 Current: 6
+2026-11-01 09:59:58| Organizer [VERBOSE] Getting!
+2026-11-01 09:59:58| Organizer [WARN] Echad Ring not found.
+2026-11-01 09:59:58| Organizer [WARN] Warp Ring not found.
+2026-11-01 09:59:58| Organizer [WARN] Shneddick Ring not found.
+2026-11-01 09:59:58| Organizer [VERBOSE] Got 0 item(s), and failed getting 0 item(s)
+2026-11-01 09:59:58| Organizer [VERBOSE] Skipping item: (Linkpearl) because it is an equipped linkshell.
+2026-11-01 09:59:58| Organizer [VERBOSE] Skipping item: (Linkpearl) because it is an equipped linkshell.
+2026-11-01 09:59:58| Organizer [VERBOSE] No remainder, so we found everything we were looking for!
+2026-11-01 09:59:58| Organizer [VERBOSE] Skipping item: (Linkpearl) because it is an equipped linkshell.
+2026-11-01 09:59:58| Organizer [VERBOSE] Skipping item: (Linkpearl) because it is an equipped linkshell.
+2026-11-01 09:59:58| Organizer [MSG] Done! - 18 items matched and 3 items missing!
+2026-11-01 09:59:58| Organizer [VERBOSE] Item Missing: echad ring 
+2026-11-01 09:59:58| Organizer [VERBOSE] Item Missing: warp ring 
+2026-11-01 09:59:58| Organizer [VERBOSE] Item Missing: shneddick ring 
+2026-11-01 10:00:25| Organizer [MSG] Starting...
+2026-11-01 10:00:25| Organizer [VERBOSE] Getting!
+2026-11-01 10:00:25| Organizer [WARN] Shneddick Ring not found.
+2026-11-01 10:00:25| Organizer [VERBOSE] Got 0 item(s), and failed getting 0 item(s)
+2026-11-01 10:00:25| Organizer [VERBOSE] Skipping item: (Linkpearl) because it is an equipped linkshell.
+2026-11-01 10:00:25| Organizer [VERBOSE] Skipping item: (Linkpearl) because it is an equipped linkshell.
+2026-11-01 10:00:25| Organizer [VERBOSE] Remainder: 1 Current: 6
+2026-11-01 10:00:25| Organizer [VERBOSE] Getting!
+2026-11-01 10:00:25| Organizer [WARN] Shneddick Ring not found.
+2026-11-01 10:00:25| Organizer [VERBOSE] Got 0 item(s), and failed getting 0 item(s)
+2026-11-01 10:00:25| Organizer [VERBOSE] Skipping item: (Linkpearl) because it is an equipped linkshell.
+2026-11-01 10:00:25| Organizer [VERBOSE] Skipping item: (Linkpearl) because it is an equipped linkshell.
+2026-11-01 10:00:25| Organizer [VERBOSE] No remainder, so we found everything we were looking for!
+2026-11-01 10:00:25| Organizer [VERBOSE] Skipping item: (Linkpearl) because it is an equipped linkshell.
+2026-11-01 10:00:25| Organizer [VERBOSE] Skipping item: (Linkpearl) because it is an equipped linkshell.
+2026-11-01 10:00:25| Organizer [MSG] Done! - 19 items matched and 1 items missing!
+2026-11-01 10:00:25| Organizer [VERBOSE] Item Missing: shneddick ring 
+2026-11-01 10:01:30| Organizer [MSG] Starting...
+2026-11-01 10:01:30| Organizer [VERBOSE] Getting!
+2026-11-01 10:01:30| Organizer [WARN] Shneddick Ring not found.
+2026-11-01 10:01:30| Organizer [VERBOSE] Got 0 item(s), and failed getting 0 item(s)
+2026-11-01 10:01:30| Organizer [VERBOSE] Skipping item: (Linkpearl) because it is an equipped linkshell.
+2026-11-01 10:01:30| Organizer [VERBOSE] Skipping item: (Linkpearl) because it is an equipped linkshell.
+2026-11-01 10:01:30| Organizer [VERBOSE] Remainder: 1 Current: 6
+2026-11-01 10:01:30| Organizer [VERBOSE] Getting!
+2026-11-01 10:01:30| Organizer [WARN] Shneddick Ring not found.
+2026-11-01 10:01:30| Organizer [VERBOSE] Got 0 item(s), and failed getting 0 item(s)
+2026-11-01 10:01:30| Organizer [VERBOSE] Skipping item: (Linkpearl) because it is an equipped linkshell.
+2026-11-01 10:01:30| Organizer [VERBOSE] Skipping item: (Linkpearl) because it is an equipped linkshell.
+2026-11-01 10:01:30| Organizer [VERBOSE] No remainder, so we found everything we were looking for!
+2026-11-01 10:01:30| Organizer [VERBOSE] Skipping item: (Linkpearl) because it is an equipped linkshell.
+2026-11-01 10:01:30| Organizer [VERBOSE] Skipping item: (Linkpearl) because it is an equipped linkshell.
+2026-11-01 10:01:30| Organizer [MSG] Done! - 20 items matched and 1 items missing!
+2026-11-01 10:01:30| Organizer [VERBOSE] Item Missing: shneddick ring 
+2026-11-01 14:49:05| Organizer [MSG] Starting...
+2026-11-01 14:49:05| Organizer [VERBOSE] Getting!
+2026-11-01 14:49:05| Organizer [VERBOSE] Got 0 item(s), and failed getting 0 item(s)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Velkk Necklace) from Inventory 79 to Safe 2 75)
+2026-11-01 14:49:05| Organizer [VERBOSE] Skipping item: (Linkpearl) because it is an equipped linkshell.
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Umbril Ooze) from Inventory 78 to Safe 2 76)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Twitherym Wing) from Inventory 77 to Safe 2 77)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Adaman Ingot) from Inventory 76 to Safe 2 78)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Ethereal Earring) from Inventory 75 to Wardrobe 2 64)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Sickle) from Inventory 74 to Safe 2 79)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Merciful Cape) from Inventory 73 to Wardrobe 2 65)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Eudaemon Ring) from Inventory 72 to Locker 24)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Revival Root) from Inventory 71 to Locker 25)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Grl. Coffer Key) from Inventory 70 to Locker 26)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Treant Bulb) from Inventory 69 to Locker 27)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Sch. Testimony) from Inventory 68 to Locker 28)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Kindred's Seal) from Inventory 67 to Locker 29)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Bottled Pixie) from Inventory 66 to Locker 30)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Elixir) from Inventory 65 to Locker 31)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Eminent Lance) from Inventory 64 to Wardrobe 2 66)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Vehemence Ring) from Inventory 63 to Wardrobe 2 67)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Wind Crystal) from Inventory 62 to Locker 32)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (H. Kindred Crest) from Inventory 61 to Locker 33)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Light Geode) from Inventory 60 to Locker 34)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Patentia Sash) from Inventory 59 to Wardrobe 2 68)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Smertrios's Mantle) from Inventory 58 to Wardrobe 2 69)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Pellucid Stone) from Inventory 57 to Locker 35)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Luminicloth) from Inventory 56 to Locker 36)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Taupe Stone) from Inventory 55 to Locker 37)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (S. Kindred Crest) from Inventory 54 to Locker 38)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Copper Voucher) from Inventory 53 to Locker 39)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Wind Crystal) from Inventory 52 to Locker 40)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Leviatite) from Inventory 51 to Locker 41)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Rep. Silver Medal) from Inventory 50 to Wardrobe 2 70)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Dim. Ring (Dem)) from Inventory 49 to Wardrobe 2 71)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Kindred's Crest) from Inventory 48 to Locker 42)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Vegetable Seeds) from Inventory 47 to Locker 43)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (A. Chit: Ring) from Inventory 46 to Locker 44)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Lightng. Crystal) from Inventory 45 to Locker 45)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Abdhaljs Metal) from Inventory 44 to Locker 46)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Abdhaljs Fiber) from Inventory 43 to Locker 47)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Jeunoan Flag) from Inventory 42 to Locker 48)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Bat Wing) from Inventory 41 to Locker 49)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Faithful's Torso I) from Inventory 40 to Locker 50)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Flint Stone) from Inventory 39 to Locker 51)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Sulfur) from Inventory 38 to Locker 52)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Marble Nugget) from Inventory 37 to Locker 53)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Midrium Ore) from Inventory 36 to Locker 54)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Wind Crystal) from Inventory 35 to Locker 55)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Bat Fang) from Inventory 34 to Locker 56)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Bat Wing) from Inventory 33 to Locker 57)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Wind Crystal) from Inventory 32 to Locker 58)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Adamantoise Shell) from Inventory 31 to Locker 59)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Snow Geode) from Inventory 30 to Locker 60)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Fiend Blood) from Inventory 29 to Locker 61)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Wind Crystal) from Inventory 28 to Locker 62)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Wind Crystal) from Inventory 27 to Locker 63)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Swift Belt) from Inventory 26 to Wardrobe 2 72)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Thunder Geode) from Inventory 25 to Locker 64)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Rem's Tale Ch.2) from Inventory 24 to Locker 65)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Opal Ring) from Inventory 23 to Wardrobe 2 73)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Wind Crystal) from Inventory 22 to Locker 66)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Wind Crystal) from Inventory 21 to Locker 67)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Fenrite) from Inventory 20 to Locker 68)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Wind Crystal) from Inventory 19 to Locker 69)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Wind Crystal) from Inventory 18 to Locker 70)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Bat Wing) from Inventory 17 to Locker 71)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Wind Crystal) from Inventory 16 to Locker 72)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Bat Fang) from Inventory 15 to Locker 73)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Wind Crystal) from Inventory 14 to Locker 74)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Beastman Blood) from Inventory 13 to Locker 75)
+2026-11-01 14:49:05| Organizer [VERBOSE] Moving item! (Wind Crystal) from Inventory 12 to Locker 76)
+2026-11-01 14:49:05| Organizer [VERBOSE] No remainder, so we found everything we were looking for!
+2026-11-01 14:49:05| Organizer [VERBOSE] Skipping item: (Linkpearl) because it is an equipped linkshell.
+2026-11-01 14:49:05| Organizer [MSG] Done! - 17 items matched and 0 items missing!

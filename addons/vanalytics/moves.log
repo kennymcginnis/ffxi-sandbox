@@ -1,0 +1,54 @@
+[2026-10-25 16:16:08] ========================================
+[2026-10-25 16:16:08] EXECUTE: 2 pending move(s)
+[2026-10-25 16:16:08] ========================================
+[2026-10-25 16:16:08] Accessible bags:
+[2026-10-25 16:16:08]   Inventory
+[2026-10-25 16:16:08]   Case
+[2026-10-25 16:16:08]   Locker
+[2026-10-25 16:16:08]   Wardrobe8
+[2026-10-25 16:16:08]   Wardrobe7
+[2026-10-25 16:16:08]   Storage
+[2026-10-25 16:16:08]   Sack
+[2026-10-25 16:16:08]   Safe2
+[2026-10-25 16:16:08]   Safe
+[2026-10-25 16:16:08]   Wardrobe4
+[2026-10-25 16:16:08]   Wardrobe5
+[2026-10-25 16:16:08]   Wardrobe
+[2026-10-25 16:16:08]   Wardrobe6
+[2026-10-25 16:16:08]   Satchel
+[2026-10-25 16:16:08]   Wardrobe2
+[2026-10-25 16:16:08]   Wardrobe3
+[2026-10-25 16:16:08] Executable: 2, Skipped: 0
+[2026-10-25 16:16:08] --- Move 1/2: 1x Phaosphaelia: Wardrobe2 -> Wardrobe (direct=false) ---
+[2026-10-25 16:16:08]   Move order: id=55604 itemId=21224 item="Phaosphaelia" qty=1 from=Wardrobe2:32 to=Wardrobe
+[2026-10-25 16:16:08] MOVE: Phaosphaelia qty=1 Wardrobe2 -> Inventory
+[2026-10-25 16:16:08]   source_slot=32 source_qty=1 qty_to_move=1
+[2026-10-25 16:16:08]     found itemId=21224 qty=1 at wardrobe2:32
+[2026-10-25 16:16:08]   plan: auto-place remaining 1
+[2026-10-25 16:16:08]   total sub-moves: 1
+[2026-10-25 16:16:08]   SUB-INJECT: 1 from Wardrobe2:32 to destSlot=82
+[2026-10-25 16:16:10]   SUB-VERIFY: slot 32 qty_before=1 qty_after=0
+[2026-10-25 16:16:10]   SUB-PASS: decreased by 1
+[2026-10-25 16:16:12] STEP2 LOOKUP: searching Inventory for itemId=21224
+[2026-10-25 16:16:12]     found itemId=21224 qty=1 at inventory:17
+[2026-10-25 16:16:12] STEP2: found at Inventory slot 17, moving to Wardrobe
+[2026-10-25 16:16:12] MOVE: Phaosphaelia qty=1 Inventory -> Wardrobe
+[2026-10-25 16:16:12]   source_slot=17 source_qty=1 qty_to_move=1
+[2026-10-25 16:16:12]     found itemId=21224 qty=1 at inventory:17
+[2026-10-25 16:16:12]   plan: auto-place remaining 1
+[2026-10-25 16:16:12]   total sub-moves: 1
+[2026-10-25 16:16:12]   SUB-INJECT: 1 from Inventory:17 to destSlot=82
+[2026-10-25 16:16:14]   SUB-VERIFY: slot 17 qty_before=1 qty_after=1
+[2026-10-25 16:16:14]   SUB-FAIL: unchanged
+[2026-10-25 16:16:14] --- Move 2/2: 1x Fire Crystal: Safe -> Safe (direct=false) ---
+[2026-10-25 16:16:14]   Move order: id=55605 itemId=4096 item="Fire Crystal" qty=1 from=Safe:36 to=Safe
+[2026-10-25 16:16:14] MOVE: Fire Crystal qty=1 Safe -> Inventory
+[2026-10-25 16:16:14]   source_slot=36 source_qty=1 qty_to_move=1
+[2026-10-25 16:16:14]     found itemId=4096 qty=4 at safe:9
+[2026-10-25 16:16:14]     found itemId=4096 qty=1 at safe:36
+[2026-10-25 16:16:14]   plan: auto-place remaining 1
+[2026-10-25 16:16:14]   total sub-moves: 1
+[2026-10-25 16:16:14]   SUB-INJECT: 1 from Safe:36 to destSlot=82
+[2026-10-25 16:16:16]   SUB-VERIFY: slot 36 qty_before=1 qty_after=1
+[2026-10-25 16:16:16]   SUB-FAIL: unchanged
+[2026-10-25 16:16:16] ALL COMPLETE: succeeded=0 failed=2

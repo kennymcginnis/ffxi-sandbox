@@ -1,0 +1,26 @@
+using Soverance.Forum.DTOs;
+
+namespace Vanalytics.Api.DTOs;
+
+public record QuotedPostInfo(
+    long Id, string AuthorUsername, string? AuthorDisplayName,
+    string Body, bool IsDeleted);
+
+public record EnrichedPostResponse(
+    long Id, Guid AuthorId, string? Body, bool IsEdited, bool IsDeleted,
+    ReactionSummary Reactions, string[] UserReactions,
+    long? ReplyToPostId, QuotedPostInfo? QuotedPost,
+    DateTimeOffset CreatedAt, DateTimeOffset? UpdatedAt,
+    string AuthorUsername, string? AuthorDisplayName, string? AuthorAvatarHash, int AuthorPostCount, DateTimeOffset AuthorJoinedAt);
+
+public record EnrichedThreadSummaryResponse(
+    int Id, string Title, string Slug, bool IsPinned, bool IsLocked, bool IsDeleted,
+    Guid AuthorId, int ReplyCount, int VoteCount,
+    DateTimeOffset CreatedAt, DateTimeOffset LastPostAt,
+    string AuthorUsername, string? AuthorDisplayName, string? AuthorAvatarHash);
+
+public record EnrichedThreadDetailResponse(
+    int Id, string Title, string Slug, int CategoryId, string CategoryName, string CategorySlug,
+    bool IsPinned, bool IsLocked, bool IsDeleted, bool CategoryIsSystem, Guid AuthorId,
+    DateTimeOffset CreatedAt, DateTimeOffset LastPostAt,
+    string AuthorUsername, string? AuthorDisplayName, string? AuthorAvatarHash);

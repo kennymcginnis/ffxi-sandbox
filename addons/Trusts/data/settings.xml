@@ -1,0 +1,130 @@
+<?xml version="1.1" ?>
+<settings>
+    <global>
+        <auto>true</auto>
+        <language>English</language>
+        <sets>
+            <aoe>
+                <1>Apururu (UC)</1>
+                <2>Koru-Moru</2>
+                <3>King of Hearts</3>
+                <4>Selh&apos;teus</4>
+            </aoe>
+            <blu>
+                <1>Apururu (UC)</1>
+                <2>Valaineral</2>
+                <3>Koru-Moru</3>
+                <4>King of Hearts</4>
+                <5>Joachim</5>
+            </blu>
+            <brd>
+                <1>Valaineral</1>
+                <2>Apururu (UC)</2>
+                <3>Tenzen II</3>
+                <4>Zeid II</4>
+                <5>Shantotto II</5>
+            </brd>
+            <brdhaste>
+                <1>Mihli Aliapoh</1>
+                <2>Zeid II</2>
+                <3>Valaineral</3>
+                <4>Joachim</4>
+            </brdhaste>
+            <cor>
+                <1>Valaineral</1>
+                <2>Apururu (UC)</2>
+                <3>Zeid II</3>
+                <4>Shantotto II</4>
+                <5>Koru-Moru</5>
+            </cor>
+            <default>
+                <1>Valaineral</1>
+                <2>Mihli Aliapoh</2>
+                <3>Tenzen</3>
+                <4>Adelheid</4>
+                <5>Joachim</5>
+            </default>
+            <mb>
+                <1>Shantotto II</1>
+                <2>Apururu (UC)</2>
+                <3>Valaineral</3>
+                <4>Iroha II</4>
+                <5>Halver</5>
+            </mb>
+            <nomb>
+                <1>Apururu (UC)</1>
+                <2>Valaineral</2>
+                <3>Iroha II</3>
+                <4>Halver</4>
+                <5>Semih Lafihna</5>
+            </nomb>
+            <piercing>
+                <1>Valaineral</1>
+                <2>Lion II</2>
+                <3>Apururu (UC)</3>
+                <4>Joachim</4>
+            </piercing>
+            <run>
+                <1>Apururu (UC)</1>
+                <2>Ulmia</2>
+                <3>Koru-Moru</3>
+                <4>Shantotto II</4>
+                <5>Ayame</5>
+            </run>
+            <sam>
+                <1>Valaineral</1>
+                <2>Koru-Moru</2>
+                <3>Apururu (UC)</3>
+                <4>Shantotto II</4>
+                <5>Zeid II</5>
+            </sam>
+            <soco>
+                <1>Valaineral</1>
+                <2>Apururu (UC)</2>
+                <3>Koru-Moru</3>
+                <4>Ayame</4>
+                <5>Zeid II</5>
+            </soco>
+            <t2>
+                <1>Valaineral</1>
+                <2>Apururu (UC)</2>
+                <3>Koru-Moru</3>
+                <4>Ulmia</4>
+                <5>Zeid II</5>
+            </t2>
+            <test>
+                <1>Valaineral</1>
+                <2>Apururu (UC)</2>
+                <3>Joachim</3>
+                <4>Koru-Moru</4>
+                <5>Selh&apos;teus</5>
+            </test>
+            <thf>
+                <1>Valaineral</1>
+                <2>Apururu (UC)</2>
+                <3>Shantotto II</3>
+                <4>Koru-Moru</4>
+                <5>Ayame</5>
+            </thf>
+            <war>
+                <1>Curilla</1>
+                <2>Apururu (UC)</2>
+                <3>Koru-Moru</3>
+                <4>Joachim</4>
+                <5>Ayame</5>
+            </war>
+            <wsbrd>
+                <1>Valaineral</1>
+                <2>Apururu (UC)</2>
+                <3>Shantotto II</3>
+                <4>Joachim</4>
+                <5>Ayame</5>
+            </wsbrd>
+        </sets>
+        <wait>
+            <aftercast>3</aftercast>
+            <retr>1.25</retr>
+            <retrall>3</retrall>
+        </wait>
+    </global>
+</settings>

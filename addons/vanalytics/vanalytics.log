@@ -1,0 +1,639 @@
+[2026-10-25 09:56:16] [INFO] --- session start | vanalytics 1.0.91 | url=https://vanalytics.soverance.com ---
+[2026-10-25 09:56:16] [INFO] character: Taylormade
+[2026-10-25 09:56:16] [INFO] Augment backfill: next sync will be a full inventory re-sync.
+[2026-10-25 09:56:16] [INFO] Loaded.
+[2026-10-25 09:56:16] [ERROR] No API key configured. Run: //vanalytics apikey <your-key>
+[2026-10-25 09:56:42] [SUCCESS] API key saved.
+[2026-10-25 09:56:53] [INFO] Syncing...
+[2026-10-25 09:56:53] [INFO] sync chain start (trigger=manual)
+[2026-10-25 09:57:03] [INFO] step Character -> ok
+[2026-10-25 09:57:03] [INFO] inventory: fullSync=true changes=595
+[2026-10-25 09:57:04] [INFO] inventory: POST status=200
+[2026-10-25 09:57:04] [INFO] step Inventory -> ok
+[2026-10-25 09:57:04] [INFO] step Porter -> ok
+[2026-10-25 09:57:04] [INFO] step Progression -> ok
+[2026-10-25 09:57:04] [INFO] step Currencies -> ok
+[2026-10-25 09:57:04] [INFO] step Missions -> ok
+[2026-10-25 09:57:04] [INFO] step Collection -> ok
+[2026-10-25 09:57:04] [INFO] step Bazaar -> ok
+[2026-10-25 09:57:04] [INFO] step Moves -> ok
+[2026-10-25 09:57:04] [INFO] sync summary: Taylormade, all 9 steps ok
+[2026-10-25 09:57:04] [SUCCESS] Sync complete for Taylormade. all 9 steps ok.
+[2026-10-25 09:57:08] [INFO] --- Vanalytics Status ---
+[2026-10-25 09:57:08] [INFO] API URL: https://vanalytics.soverance.com
+[2026-10-25 09:57:08] [INFO] API Key: ****1Ek=
+[2026-10-25 09:57:08] [INFO] Sync Interval: 60 minutes
+[2026-10-25 09:57:08] [INFO] Notify On Sync: on
+[2026-10-25 09:57:08] [INFO] Last Sync: 0 minute(s) ago (Success)
+[2026-10-25 14:15:18] [INFO] Logged in as Taylormade. Auto-sync active (every 60 min).
+[2026-10-25 15:15:18] [INFO] sync chain start (trigger=auto)
+[2026-10-25 15:15:21] [INFO] step Character -> ok
+[2026-10-25 15:15:21] [INFO] inventory: fullSync=true changes=600
+[2026-10-25 15:15:22] [INFO] inventory: POST status=200
+[2026-10-25 15:15:22] [INFO] step Inventory -> ok
+[2026-10-25 15:15:22] [INFO] step Porter -> ok
+[2026-10-25 15:15:22] [INFO] step Progression -> ok
+[2026-10-25 15:15:22] [INFO] step Currencies -> ok
+[2026-10-25 15:15:22] [INFO] step Missions -> ok
+[2026-10-25 15:15:22] [INFO] step Collection -> ok
+[2026-10-25 15:15:22] [INFO] step Bazaar -> ok
+[2026-10-25 15:15:23] [INFO] 2 pending inventory move(s). Type //va moves execute to run them.
+[2026-10-25 15:15:23] [INFO] step Moves -> ok
+[2026-10-25 15:15:23] [INFO] sync summary: Taylormade, all 9 steps ok
+[2026-10-25 15:15:23] [SUCCESS] Sync complete for Taylormade. all 9 steps ok.
+[2026-10-25 16:15:18] [INFO] sync chain start (trigger=auto)
+[2026-10-25 16:15:30] [INFO] step Character -> ok
+[2026-10-25 16:15:30] [INFO] inventory: fullSync=false changes=6
+[2026-10-25 16:15:30] [INFO] inventory: POST status=200
+[2026-10-25 16:15:30] [INFO] step Inventory -> ok
+[2026-10-25 16:15:30] [INFO] step Porter -> ok
+[2026-10-25 16:15:31] [INFO] step Progression -> ok
+[2026-10-25 16:15:31] [INFO] step Currencies -> ok
+[2026-10-25 16:15:31] [INFO] step Missions -> ok
+[2026-10-25 16:15:31] [INFO] step Collection -> ok
+[2026-10-25 16:15:31] [INFO] step Bazaar -> ok
+[2026-10-25 16:15:31] [INFO] 2 pending inventory move(s). Type //va moves execute to run them.
+[2026-10-25 16:15:31] [INFO] step Moves -> ok
+[2026-10-25 16:15:31] [INFO] sync summary: Taylormade, all 9 steps ok
+[2026-10-25 16:15:31] [SUCCESS] Sync complete for Taylormade. all 9 steps ok.
+[2026-10-25 16:15:48] [INFO] --- Vanalytics Commands ---
+[2026-10-25 16:15:48] [INFO] //va apikey <key> - Set your API key
+[2026-10-25 16:15:48] [INFO] //va url <url>    - Set API URL (or: local / prod)
+[2026-10-25 16:15:48] [INFO] //va sync         - Sync now
+[2026-10-25 16:15:48] [INFO] //va status       - Show status
+[2026-10-25 16:15:48] [INFO] //va version      - Check addon version against the server
+[2026-10-25 16:15:48] [INFO] //va update       - Download the latest addon from the server and reload (--force to re-download)
+[2026-10-25 16:15:48] [INFO] //va log          - Show the log file path + size (//va log clear to reset)
+[2026-10-25 16:15:48] [INFO] //va interval N   - Set sync interval in minutes (min: 5)
+[2026-10-25 16:15:48] [INFO] //va notify on|off - Toggle in-game chat notifications on successful sync
+[2026-10-25 16:15:48] [INFO] //va dump         - Dump player data to file
+[2026-10-25 16:15:48] [INFO] //va widescan [filter] - List widescan results with mob indexes (BG-wiki "ID" matches mob.index)
+[2026-10-25 16:15:48] [INFO] //va hunt                       - Show hunt status (overlays, positions, scan state)
+[2026-10-25 16:15:48] [INFO] //va hunt on|off|toggle         - Toggle hunt overlays (target info + wide scan tracker)
+[2026-10-25 16:15:48] [INFO] //va hunt pos                   - Show current overlay positions
+[2026-10-25 16:15:48] [INFO] //va hunt pos target <x> <y>    - Move target overlay (no mouse needed)
+[2026-10-25 16:15:48] [INFO] //va hunt pos widescan <x> <y>  - Move wide scan tracker panel
+[2026-10-25 16:15:48] [INFO] //va hunt pos watch <x> <y>     - Move watch list panel
+[2026-10-25 16:15:48] [INFO] //va hunt pos save              - Persist current dragged positions
+[2026-10-25 16:15:48] [INFO] //va hunt watch                 - List watched mobs (auto-populated by in-game Track)
+[2026-10-25 16:15:48] [INFO] //va hunt watch nm <name>       - Pre-watch all curated slots (NM + PH) for an NM by name
+[2026-10-25 16:15:48] [INFO] //va hunt watch remove <idx>    - Stop watching a mob (decimal or 0x-hex)
+[2026-10-25 16:15:48] [INFO] //va hunt watch clear           - Clear all watched mobs
+[2026-10-25 16:15:48] [INFO] //va hunt sound on|off|test     - Toggle pop alert sounds (or test playback)
+[2026-10-25 16:15:48] [INFO] //va hunt nm                    - Show NM cache for 20s (auto-hides on commit)
+[2026-10-25 16:15:48] [INFO] //va hunt nm pin                - Toggle persistent pin (always visible)
+[2026-10-25 16:15:48] [INFO] //va hunt nm list               - Dump the cached NM name list to chat
+[2026-10-25 16:15:48] [INFO] //va hunt probe [label]         - Recon: dump cursor-candidate state to hunt-probe-N.txt
+[2026-10-25 16:15:48] [INFO] //va session start   - Start a performance tracking session
+[2026-10-25 16:15:48] [INFO] //va session stop    - Stop the active session and upload data
+[2026-10-25 16:15:48] [INFO] //va session status  - Show current session info
+[2026-10-25 16:15:48] [INFO] //va session flush   - Manually upload buffered events
+[2026-10-25 16:15:48] [INFO] //va session recover - Re-upload past session files that failed to upload
+[2026-10-25 16:15:48] [INFO] //va session cleanup - Delete old session files
+[2026-10-25 16:15:48] [INFO] //va session debug   - Toggle debug mode (logs unmatched chat lines)
+[2026-10-25 16:15:48] [INFO] //va macros push [--force]  - Upload changed macro books (zone first to flush edits)
+[2026-10-25 16:15:48] [INFO] //va macros pull [--force]  - Download pending macro updates (zone to apply in-game)
+[2026-10-25 16:15:48] [INFO] //va macros status         - Show tracked macro book count
+[2026-10-25 16:15:48] [INFO] //va macros diag           - Show per-book change-detection state
+[2026-10-25 16:15:48] [INFO] //va blueprint pull [JOB] [--force] - Install your generated GearSwap file for a job
+[2026-10-25 16:15:48] [INFO] //va moves execute   - Execute pending inventory move orders
+[2026-10-25 16:15:48] [INFO] //va moves status    - Show pending move order details
+[2026-10-25 16:15:48] [INFO] //va help         - Show this help
+[2026-10-25 16:16:14] [ERROR] Failed to move 1x Phaosphaelia: Wardrobe2 -> Wardrobe — no items moved from Inventory slot 17 (item may be in Inventory)
+[2026-10-25 16:16:16] [ERROR] Failed to move 1x Fire Crystal: Safe -> Safe — no items moved from Safe slot 36
+[2026-10-25 16:16:16] [INFO] inventory: fullSync=false changes=2
+[2026-10-25 16:16:17] [INFO] inventory: POST status=200
+[2026-10-25 17:15:18] [INFO] sync chain start (trigger=auto)
+[2026-10-25 17:15:29] [INFO] step Character -> ok
+[2026-10-25 17:15:29] [INFO] inventory: fullSync=false changes=8
+[2026-10-25 17:15:30] [INFO] inventory: POST status=200
+[2026-10-25 17:15:30] [INFO] step Inventory -> ok
+[2026-10-25 17:15:30] [INFO] step Porter -> ok
+[2026-10-25 17:15:30] [INFO] step Progression -> ok
+[2026-10-25 17:15:30] [INFO] step Currencies -> ok
+[2026-10-25 17:15:30] [INFO] step Missions -> ok
+[2026-10-25 17:15:30] [INFO] step Collection -> ok
+[2026-10-25 17:15:30] [INFO] step Bazaar -> ok
+[2026-10-25 17:15:31] [INFO] 2 pending inventory move(s). Type //va moves execute to run them.
+[2026-10-25 17:15:31] [INFO] step Moves -> ok
+[2026-10-25 17:15:31] [INFO] sync summary: Taylormade, all 9 steps ok
+[2026-10-25 17:15:31] [SUCCESS] Sync complete for Taylormade. all 9 steps ok.
+[2026-10-25 17:16:01] [INFO] Syncing...
+[2026-10-25 17:16:01] [INFO] sync chain start (trigger=manual)
+[2026-10-25 17:16:10] [INFO] step Character -> ok
+[2026-10-25 17:16:10] [INFO] inventory: fullSync=false changes=0
+[2026-10-25 17:16:10] [INFO] inventory: no changes, skipping
+[2026-10-25 17:16:10] [INFO] step Inventory -> ok
+[2026-10-25 17:16:10] [INFO] step Porter -> ok
+[2026-10-25 17:16:10] [INFO] step Progression -> ok
+[2026-10-25 17:16:10] [INFO] step Currencies -> ok
+[2026-10-25 17:16:10] [INFO] step Missions -> ok
+[2026-10-25 17:16:11] [INFO] step Collection -> ok
+[2026-10-25 17:16:11] [INFO] step Bazaar -> ok
+[2026-10-25 17:16:11] [INFO] 2 pending inventory move(s). Type //va moves execute to run them.
+[2026-10-25 17:16:11] [INFO] step Moves -> ok
+[2026-10-25 17:16:11] [INFO] sync summary: Taylormade, all 9 steps ok
+[2026-10-25 17:16:11] [SUCCESS] Sync complete for Taylormade. all 9 steps ok.
+[2026-10-25 18:15:18] [INFO] sync chain start (trigger=auto)
+[2026-10-25 18:15:32] [INFO] step Character -> ok
+[2026-10-25 18:15:32] [INFO] inventory: fullSync=false changes=50
+[2026-10-25 18:15:32] [INFO] inventory: POST status=200
+[2026-10-25 18:15:32] [INFO] step Inventory -> ok
+[2026-10-25 18:15:32] [INFO] step Porter -> ok
+[2026-10-25 18:15:32] [INFO] step Progression -> ok
+[2026-10-25 18:15:32] [INFO] step Currencies -> ok
+[2026-10-25 18:15:32] [INFO] step Missions -> ok
+[2026-10-25 18:15:33] [INFO] step Collection -> ok
+[2026-10-25 18:15:33] [INFO] step Bazaar -> ok
+[2026-10-25 18:15:33] [INFO] 2 pending inventory move(s). Type //va moves execute to run them.
+[2026-10-25 18:15:33] [INFO] step Moves -> ok
+[2026-10-25 18:15:33] [INFO] sync summary: Taylormade, all 9 steps ok
+[2026-10-25 18:15:33] [SUCCESS] Sync complete for Taylormade. all 9 steps ok.
+[2026-10-25 19:15:18] [INFO] sync chain start (trigger=auto)
+[2026-10-25 19:15:32] [INFO] step Character -> ok
+[2026-10-25 19:15:32] [INFO] inventory: fullSync=false changes=15
+[2026-10-25 19:15:32] [INFO] inventory: POST status=200
+[2026-10-25 19:15:32] [INFO] step Inventory -> ok
+[2026-10-25 19:15:32] [INFO] step Porter -> ok
+[2026-10-25 19:15:32] [INFO] step Progression -> ok
+[2026-10-25 19:15:32] [INFO] step Currencies -> ok
+[2026-10-25 19:15:33] [INFO] step Missions -> ok
+[2026-10-25 19:15:33] [INFO] step Collection -> ok
+[2026-10-25 19:15:33] [INFO] step Bazaar -> ok
+[2026-10-25 19:15:33] [INFO] 2 pending inventory move(s). Type //va moves execute to run them.
+[2026-10-25 19:15:33] [INFO] step Moves -> ok
+[2026-10-25 19:15:33] [INFO] sync summary: Taylormade, all 9 steps ok
+[2026-10-25 19:15:33] [SUCCESS] Sync complete for Taylormade. all 9 steps ok.
+[2026-10-25 20:15:18] [INFO] sync chain start (trigger=auto)
+[2026-10-25 20:15:28] [INFO] step Character -> ok
+[2026-10-25 20:15:28] [INFO] inventory: fullSync=false changes=13
+[2026-10-25 20:15:29] [INFO] inventory: POST status=200
+[2026-10-25 20:15:29] [INFO] step Inventory -> ok
+[2026-10-25 20:15:29] [INFO] step Porter -> ok
+[2026-10-25 20:15:29] [INFO] step Progression -> ok
+[2026-10-25 20:15:29] [INFO] step Currencies -> ok
+[2026-10-25 20:15:29] [INFO] step Missions -> ok
+[2026-10-25 20:15:29] [INFO] step Collection -> ok
+[2026-10-25 20:15:29] [INFO] step Bazaar -> ok
+[2026-10-25 20:15:30] [INFO] 2 pending inventory move(s). Type //va moves execute to run them.
+[2026-10-25 20:15:30] [INFO] step Moves -> ok
+[2026-10-25 20:15:30] [INFO] sync summary: Taylormade, all 9 steps ok
+[2026-10-25 20:15:30] [SUCCESS] Sync complete for Taylormade. all 9 steps ok.
+[2026-10-25 21:15:18] [INFO] sync chain start (trigger=auto)
+[2026-10-25 21:15:23] [INFO] step Character -> ok
+[2026-10-25 21:15:23] [INFO] inventory: fullSync=false changes=77
+[2026-10-25 21:15:23] [INFO] inventory: POST status=200
+[2026-10-25 21:15:23] [INFO] step Inventory -> ok
+[2026-10-25 21:15:23] [INFO] step Porter -> ok
+[2026-10-25 21:15:23] [INFO] step Progression -> ok
+[2026-10-25 21:15:23] [INFO] step Currencies -> ok
+[2026-10-25 21:15:24] [INFO] step Missions -> ok
+[2026-10-25 21:15:24] [INFO] step Collection -> ok
+[2026-10-25 21:15:24] [INFO] step Bazaar -> ok
+[2026-10-25 21:15:24] [INFO] 2 pending inventory move(s). Type //va moves execute to run them.
+[2026-10-25 21:15:24] [INFO] step Moves -> ok
+[2026-10-25 21:15:24] [INFO] sync summary: Taylormade, all 9 steps ok
+[2026-10-25 21:15:24] [SUCCESS] Sync complete for Taylormade. all 9 steps ok.
+[2026-10-25 22:15:18] [INFO] sync chain start (trigger=auto)
+[2026-10-25 22:15:28] [INFO] step Character -> ok
+[2026-10-25 22:15:28] [INFO] inventory: fullSync=false changes=19
+[2026-10-25 22:15:28] [INFO] inventory: POST status=200
+[2026-10-25 22:15:28] [INFO] step Inventory -> ok
+[2026-10-25 22:15:29] [INFO] step Porter -> ok
+[2026-10-25 22:15:29] [INFO] step Progression -> ok
+[2026-10-25 22:15:29] [INFO] step Currencies -> ok
+[2026-10-25 22:15:29] [INFO] step Missions -> ok
+[2026-10-25 22:15:29] [INFO] step Collection -> ok
+[2026-10-25 22:15:29] [INFO] step Bazaar -> ok
+[2026-10-25 22:15:29] [INFO] 2 pending inventory move(s). Type //va moves execute to run them.
+[2026-10-25 22:15:29] [INFO] step Moves -> ok
+[2026-10-25 22:15:29] [INFO] sync summary: Taylormade, all 9 steps ok
+[2026-10-25 22:15:29] [SUCCESS] Sync complete for Taylormade. all 9 steps ok.
+[2026-10-26 16:25:07] [INFO] Logged in as Taylormade. Auto-sync active (every 60 min).
+[2026-10-26 17:25:07] [INFO] sync chain start (trigger=auto)
+[2026-10-26 17:25:19] [INFO] step Character -> ok
+[2026-10-26 17:25:19] [INFO] inventory: fullSync=true changes=664
+[2026-10-26 17:25:21] [INFO] inventory: POST status=200
+[2026-10-26 17:25:21] [INFO] step Inventory -> ok
+[2026-10-26 17:25:22] [INFO] step Porter -> ok
+[2026-10-26 17:25:22] [INFO] step Progression -> ok
+[2026-10-26 17:25:22] [INFO] step Currencies -> ok
+[2026-10-26 17:25:22] [INFO] step Missions -> ok
+[2026-10-26 17:25:23] [INFO] step Collection -> ok
+[2026-10-26 17:25:23] [INFO] step Bazaar -> ok
+[2026-10-26 17:25:23] [INFO] 2 pending inventory move(s). Type //va moves execute to run them.
+[2026-10-26 17:25:23] [INFO] step Moves -> ok
+[2026-10-26 17:25:23] [INFO] sync summary: Taylormade, all 9 steps ok
+[2026-10-26 17:25:23] [SUCCESS] Sync complete for Taylormade. all 9 steps ok.
+[2026-10-26 18:25:07] [INFO] sync chain start (trigger=auto)
+[2026-10-26 18:25:17] [INFO] step Character -> ok
+[2026-10-26 18:25:17] [INFO] inventory: fullSync=false changes=83
+[2026-10-26 18:25:17] [INFO] inventory: POST status=200
+[2026-10-26 18:25:17] [INFO] step Inventory -> ok
+[2026-10-26 18:25:18] [INFO] step Porter -> ok
+[2026-10-26 18:25:18] [INFO] step Progression -> ok
+[2026-10-26 18:25:18] [INFO] step Currencies -> ok
+[2026-10-26 18:25:19] [INFO] step Missions -> ok
+[2026-10-26 18:25:19] [INFO] step Collection -> ok
+[2026-10-26 18:25:19] [INFO] step Bazaar -> ok
+[2026-10-26 18:25:19] [INFO] 2 pending inventory move(s). Type //va moves execute to run them.
+[2026-10-26 18:25:19] [INFO] step Moves -> ok
+[2026-10-26 18:25:19] [INFO] sync summary: Taylormade, all 9 steps ok
+[2026-10-26 18:25:19] [SUCCESS] Sync complete for Taylormade. all 9 steps ok.
+[2026-10-26 19:25:07] [INFO] sync chain start (trigger=auto)
+[2026-10-26 19:25:15] [INFO] step Character -> ok
+[2026-10-26 19:25:15] [INFO] inventory: fullSync=false changes=9
+[2026-10-26 19:25:15] [INFO] inventory: POST status=200
+[2026-10-26 19:25:15] [INFO] step Inventory -> ok
+[2026-10-26 19:25:16] [INFO] step Porter -> ok
+[2026-10-26 19:25:16] [INFO] step Progression -> ok
+[2026-10-26 19:25:16] [INFO] step Currencies -> ok
+[2026-10-26 19:25:17] [INFO] step Missions -> ok
+[2026-10-26 19:25:17] [INFO] step Collection -> ok
+[2026-10-26 19:25:17] [INFO] step Bazaar -> ok
+[2026-10-26 19:25:17] [INFO] 2 pending inventory move(s). Type //va moves execute to run them.
+[2026-10-26 19:25:17] [INFO] step Moves -> ok
+[2026-10-26 19:25:17] [INFO] sync summary: Taylormade, all 9 steps ok
+[2026-10-26 19:25:17] [SUCCESS] Sync complete for Taylormade. all 9 steps ok.
+[2026-10-26 20:25:07] [INFO] sync chain start (trigger=auto)
+[2026-10-26 20:25:17] [INFO] step Character -> ok
+[2026-10-26 20:25:17] [INFO] inventory: fullSync=false changes=6
+[2026-10-26 20:25:17] [INFO] inventory: POST status=200
+[2026-10-26 20:25:17] [INFO] step Inventory -> ok
+[2026-10-26 20:25:18] [INFO] step Porter -> ok
+[2026-10-26 20:25:18] [INFO] step Progression -> ok
+[2026-10-26 20:25:18] [INFO] step Currencies -> ok
+[2026-10-26 20:25:18] [INFO] step Missions -> ok
+[2026-10-26 20:25:19] [INFO] step Collection -> ok
+[2026-10-26 20:25:19] [INFO] step Bazaar -> ok
+[2026-10-26 20:25:19] [INFO] 2 pending inventory move(s). Type //va moves execute to run them.
+[2026-10-26 20:25:19] [INFO] step Moves -> ok
+[2026-10-26 20:25:19] [INFO] sync summary: Taylormade, all 9 steps ok
+[2026-10-26 20:25:19] [SUCCESS] Sync complete for Taylormade. all 9 steps ok.
+[2026-10-26 21:25:07] [INFO] sync chain start (trigger=auto)
+[2026-10-26 21:25:16] [INFO] step Character -> ok
+[2026-10-26 21:25:16] [INFO] inventory: fullSync=false changes=109
+[2026-10-26 21:25:16] [INFO] inventory: POST status=200
+[2026-10-26 21:25:16] [INFO] step Inventory -> ok
+[2026-10-26 21:25:17] [INFO] step Porter -> ok
+[2026-10-26 21:25:17] [INFO] step Progression -> ok
+[2026-10-26 21:25:17] [INFO] step Currencies -> ok
+[2026-10-26 21:25:18] [INFO] step Missions -> ok
+[2026-10-26 21:25:18] [INFO] step Collection -> ok
+[2026-10-26 21:25:18] [INFO] step Bazaar -> ok
+[2026-10-26 21:25:18] [INFO] 2 pending inventory move(s). Type //va moves execute to run them.
+[2026-10-26 21:25:18] [INFO] step Moves -> ok
+[2026-10-26 21:25:18] [INFO] sync summary: Taylormade, all 9 steps ok
+[2026-10-26 21:25:18] [SUCCESS] Sync complete for Taylormade. all 9 steps ok.
+[2026-10-26 22:25:07] [INFO] sync chain start (trigger=auto)
+[2026-10-26 22:25:17] [INFO] step Character -> ok
+[2026-10-26 22:25:17] [INFO] inventory: fullSync=false changes=68
+[2026-10-26 22:25:17] [INFO] inventory: POST status=200
+[2026-10-26 22:25:17] [INFO] step Inventory -> ok
+[2026-10-26 22:25:17] [INFO] step Porter -> ok
+[2026-10-26 22:25:18] [INFO] step Progression -> ok
+[2026-10-26 22:25:18] [INFO] step Currencies -> ok
+[2026-10-26 22:25:18] [INFO] step Missions -> ok
+[2026-10-26 22:25:18] [INFO] step Collection -> ok
+[2026-10-26 22:25:18] [INFO] step Bazaar -> ok
+[2026-10-26 22:25:18] [INFO] 2 pending inventory move(s). Type //va moves execute to run them.
+[2026-10-26 22:25:18] [INFO] step Moves -> ok
+[2026-10-26 22:25:18] [INFO] sync summary: Taylormade, all 9 steps ok
+[2026-10-26 22:25:18] [SUCCESS] Sync complete for Taylormade. all 9 steps ok.
+[2026-10-27 16:15:56] [INFO] Logged in as Taylormade. Auto-sync active (every 60 min).
+[2026-10-27 17:15:56] [INFO] sync chain start (trigger=auto)
+[2026-10-27 17:16:06] [INFO] step Character -> ok
+[2026-10-27 17:16:06] [INFO] inventory: fullSync=true changes=656
+[2026-10-27 17:16:06] [INFO] inventory: POST status=200
+[2026-10-27 17:16:06] [INFO] step Inventory -> ok
+[2026-10-27 17:16:07] [INFO] step Porter -> ok
+[2026-10-27 17:16:07] [INFO] step Progression -> ok
+[2026-10-27 17:16:07] [INFO] step Currencies -> ok
+[2026-10-27 17:16:07] [INFO] step Missions -> ok
+[2026-10-27 17:16:08] [INFO] step Collection -> ok
+[2026-10-27 17:16:08] [INFO] step Bazaar -> ok
+[2026-10-27 17:16:08] [INFO] 2 pending inventory move(s). Type //va moves execute to run them.
+[2026-10-27 17:16:08] [INFO] step Moves -> ok
+[2026-10-27 17:16:08] [INFO] sync summary: Taylormade, all 9 steps ok
+[2026-10-27 17:16:08] [SUCCESS] Sync complete for Taylormade. all 9 steps ok.
+[2026-10-27 18:15:56] [INFO] sync chain start (trigger=auto)
+[2026-10-27 18:15:57] [INFO] step Character -> ok
+[2026-10-27 18:15:57] [INFO] inventory: fullSync=false changes=2
+[2026-10-27 18:15:57] [INFO] inventory: POST status=200
+[2026-10-27 18:15:57] [INFO] step Inventory -> ok
+[2026-10-27 18:15:57] [INFO] step Porter -> ok
+[2026-10-27 18:15:58] [INFO] step Progression -> ok
+[2026-10-27 18:15:58] [INFO] step Currencies -> ok
+[2026-10-27 18:15:58] [INFO] step Missions -> ok
+[2026-10-27 18:15:58] [INFO] step Collection -> ok
+[2026-10-27 18:15:58] [INFO] step Bazaar -> ok
+[2026-10-27 18:15:58] [INFO] 2 pending inventory move(s). Type //va moves execute to run them.
+[2026-10-27 18:15:58] [INFO] step Moves -> ok
+[2026-10-27 18:15:58] [INFO] sync summary: Taylormade, all 9 steps ok
+[2026-10-27 18:15:58] [SUCCESS] Sync complete for Taylormade. all 9 steps ok.
+[2026-10-27 19:15:56] [INFO] sync chain start (trigger=auto)
+[2026-10-27 19:15:57] [INFO] step Character -> ok
+[2026-10-27 19:15:57] [INFO] inventory: fullSync=false changes=5
+[2026-10-27 19:15:57] [INFO] inventory: POST status=200
+[2026-10-27 19:15:57] [INFO] step Inventory -> ok
+[2026-10-27 19:15:57] [INFO] step Porter -> ok
+[2026-10-27 19:15:58] [INFO] step Progression -> ok
+[2026-10-27 19:15:58] [INFO] step Currencies -> ok
+[2026-10-27 19:15:58] [INFO] step Missions -> ok
+[2026-10-27 19:15:58] [INFO] step Collection -> ok
+[2026-10-27 19:15:58] [INFO] step Bazaar -> ok
+[2026-10-27 19:15:58] [INFO] 2 pending inventory move(s). Type //va moves execute to run them.
+[2026-10-27 19:15:58] [INFO] step Moves -> ok
+[2026-10-27 19:15:58] [INFO] sync summary: Taylormade, all 9 steps ok
+[2026-10-27 19:15:58] [SUCCESS] Sync complete for Taylormade. all 9 steps ok.
+[2026-10-27 20:15:56] [INFO] sync chain start (trigger=auto)
+[2026-10-27 20:15:57] [INFO] step Character -> ok
+[2026-10-27 20:15:57] [INFO] inventory: fullSync=false changes=5
+[2026-10-27 20:15:57] [INFO] inventory: POST status=200
+[2026-10-27 20:15:57] [INFO] step Inventory -> ok
+[2026-10-27 20:15:58] [INFO] step Porter -> ok
+[2026-10-27 20:15:58] [INFO] step Progression -> ok
+[2026-10-27 20:15:58] [INFO] step Currencies -> ok
+[2026-10-27 20:15:58] [INFO] step Missions -> ok
+[2026-10-27 20:15:58] [INFO] step Collection -> ok
+[2026-10-27 20:15:58] [INFO] step Bazaar -> ok
+[2026-10-27 20:15:58] [INFO] 2 pending inventory move(s). Type //va moves execute to run them.
+[2026-10-27 20:15:58] [INFO] step Moves -> ok
+[2026-10-27 20:15:58] [INFO] sync summary: Taylormade, all 9 steps ok
+[2026-10-27 20:15:58] [SUCCESS] Sync complete for Taylormade. all 9 steps ok.
+[2026-10-27 21:15:56] [INFO] sync chain start (trigger=auto)
+[2026-10-27 21:15:57] [INFO] step Character -> ok
+[2026-10-27 21:15:57] [INFO] inventory: fullSync=false changes=7
+[2026-10-27 21:15:57] [INFO] inventory: POST status=200
+[2026-10-27 21:15:57] [INFO] step Inventory -> ok
+[2026-10-27 21:15:57] [INFO] step Porter -> ok
+[2026-10-27 21:15:58] [INFO] step Progression -> ok
+[2026-10-27 21:15:58] [INFO] step Currencies -> ok
+[2026-10-27 21:15:58] [INFO] step Missions -> ok
+[2026-10-27 21:15:58] [INFO] step Collection -> ok
+[2026-10-27 21:15:58] [INFO] step Bazaar -> ok
+[2026-10-27 21:15:58] [INFO] 2 pending inventory move(s). Type //va moves execute to run them.
+[2026-10-27 21:15:58] [INFO] step Moves -> ok
+[2026-10-27 21:15:58] [INFO] sync summary: Taylormade, all 9 steps ok
+[2026-10-27 21:15:58] [SUCCESS] Sync complete for Taylormade. all 9 steps ok.
+[2026-10-27 22:15:57] [INFO] sync chain start (trigger=auto)
+[2026-10-27 22:15:57] [INFO] step Character -> ok
+[2026-10-27 22:15:57] [INFO] inventory: fullSync=false changes=5
+[2026-10-27 22:15:57] [INFO] inventory: POST status=200
+[2026-10-27 22:15:57] [INFO] step Inventory -> ok
+[2026-10-27 22:15:58] [INFO] step Porter -> ok
+[2026-10-27 22:15:58] [INFO] step Progression -> ok
+[2026-10-27 22:15:58] [INFO] step Currencies -> ok
+[2026-10-27 22:15:58] [INFO] step Missions -> ok
+[2026-10-27 22:15:58] [INFO] step Collection -> ok
+[2026-10-27 22:15:58] [INFO] step Bazaar -> ok
+[2026-10-27 22:15:58] [INFO] 2 pending inventory move(s). Type //va moves execute to run them.
+[2026-10-27 22:15:58] [INFO] step Moves -> ok
+[2026-10-27 22:15:58] [INFO] sync summary: Taylormade, all 9 steps ok
+[2026-10-27 22:15:58] [SUCCESS] Sync complete for Taylormade. all 9 steps ok.
+[2026-10-27 23:15:57] [INFO] sync chain start (trigger=auto)
+[2026-10-27 23:15:57] [INFO] step Character -> ok
+[2026-10-27 23:15:57] [INFO] inventory: fullSync=false changes=7
+[2026-10-27 23:15:57] [INFO] inventory: POST status=200
+[2026-10-27 23:15:57] [INFO] step Inventory -> ok
+[2026-10-27 23:15:58] [INFO] step Porter -> ok
+[2026-10-27 23:15:58] [INFO] step Progression -> ok
+[2026-10-27 23:15:58] [INFO] step Currencies -> ok
+[2026-10-27 23:15:58] [INFO] step Missions -> ok
+[2026-10-27 23:15:58] [INFO] step Collection -> ok
+[2026-10-27 23:15:58] [INFO] step Bazaar -> ok
+[2026-10-27 23:15:58] [INFO] 2 pending inventory move(s). Type //va moves execute to run them.
+[2026-10-27 23:15:58] [INFO] step Moves -> ok
+[2026-10-27 23:15:58] [INFO] sync summary: Taylormade, all 9 steps ok
+[2026-10-27 23:15:58] [SUCCESS] Sync complete for Taylormade. all 9 steps ok.
+[2026-10-28 00:15:58] [INFO] sync chain start (trigger=auto)
+[2026-10-28 00:15:58] [INFO] step Character -> ok
+[2026-10-28 00:15:58] [INFO] inventory: fullSync=false changes=7
+[2026-10-28 00:15:59] [INFO] inventory: POST status=200
+[2026-10-28 00:15:59] [INFO] step Inventory -> ok
+[2026-10-28 00:15:59] [INFO] step Porter -> ok
+[2026-10-28 00:15:59] [INFO] step Progression -> ok
+[2026-10-28 00:15:59] [INFO] step Currencies -> ok
+[2026-10-28 00:15:59] [INFO] step Missions -> ok
+[2026-10-28 00:15:59] [INFO] step Collection -> ok
+[2026-10-28 00:15:59] [INFO] step Bazaar -> ok
+[2026-10-28 00:15:59] [INFO] 2 pending inventory move(s). Type //va moves execute to run them.
+[2026-10-28 00:15:59] [INFO] step Moves -> ok
+[2026-10-28 00:15:59] [INFO] sync summary: Taylormade, all 9 steps ok
+[2026-10-28 00:15:59] [SUCCESS] Sync complete for Taylormade. all 9 steps ok.
+[2026-10-28 01:15:58] [INFO] sync chain start (trigger=auto)
+[2026-10-28 01:15:59] [INFO] step Character -> ok
+[2026-10-28 01:15:59] [INFO] inventory: fullSync=false changes=8
+[2026-10-28 01:15:59] [INFO] inventory: POST status=200
+[2026-10-28 01:15:59] [INFO] step Inventory -> ok
+[2026-10-28 01:15:59] [INFO] step Porter -> ok
+[2026-10-28 01:15:59] [INFO] step Progression -> ok
+[2026-10-28 01:15:59] [INFO] step Currencies -> ok
+[2026-10-28 01:15:59] [INFO] step Missions -> ok
+[2026-10-28 01:16:00] [INFO] step Collection -> ok
+[2026-10-28 01:16:00] [INFO] step Bazaar -> ok
+[2026-10-28 01:16:00] [INFO] 2 pending inventory move(s). Type //va moves execute to run them.
+[2026-10-28 01:16:00] [INFO] step Moves -> ok
+[2026-10-28 01:16:00] [INFO] sync summary: Taylormade, all 9 steps ok
+[2026-10-28 01:16:00] [SUCCESS] Sync complete for Taylormade. all 9 steps ok.
+[2026-10-28 02:15:58] [INFO] sync chain start (trigger=auto)
+[2026-10-28 02:15:59] [INFO] step Character -> ok
+[2026-10-28 02:15:59] [INFO] inventory: fullSync=false changes=8
+[2026-10-28 02:15:59] [INFO] inventory: POST status=200
+[2026-10-28 02:15:59] [INFO] step Inventory -> ok
+[2026-10-28 02:15:59] [INFO] step Porter -> ok
+[2026-10-28 02:15:59] [INFO] step Progression -> ok
+[2026-10-28 02:15:59] [INFO] step Currencies -> ok
+[2026-10-28 02:15:59] [INFO] step Missions -> ok
+[2026-10-28 02:16:00] [INFO] step Collection -> ok
+[2026-10-28 02:16:00] [INFO] step Bazaar -> ok
+[2026-10-28 02:16:00] [INFO] 2 pending inventory move(s). Type //va moves execute to run them.
+[2026-10-28 02:16:00] [INFO] step Moves -> ok
+[2026-10-28 02:16:00] [INFO] sync summary: Taylormade, all 9 steps ok
+[2026-10-28 02:16:00] [SUCCESS] Sync complete for Taylormade. all 9 steps ok.
+[2026-10-28 03:15:58] [INFO] sync chain start (trigger=auto)
+[2026-10-28 03:15:59] [INFO] step Character -> ok
+[2026-10-28 03:15:59] [INFO] inventory: fullSync=false changes=5
+[2026-10-28 03:15:59] [INFO] inventory: POST status=200
+[2026-10-28 03:15:59] [INFO] step Inventory -> ok
+[2026-10-28 03:15:59] [INFO] step Porter -> ok
+[2026-10-28 03:16:00] [INFO] step Progression -> ok
+[2026-10-28 03:16:00] [INFO] step Currencies -> ok
+[2026-10-28 03:16:00] [INFO] step Missions -> ok
+[2026-10-28 03:16:00] [INFO] step Collection -> ok
+[2026-10-28 03:16:00] [INFO] step Bazaar -> ok
+[2026-10-28 03:16:00] [INFO] 2 pending inventory move(s). Type //va moves execute to run them.
+[2026-10-28 03:16:00] [INFO] step Moves -> ok
+[2026-10-28 03:16:00] [INFO] sync summary: Taylormade, all 9 steps ok
+[2026-10-28 03:16:00] [SUCCESS] Sync complete for Taylormade. all 9 steps ok.
+[2026-10-28 04:15:58] [INFO] sync chain start (trigger=auto)
+[2026-10-28 04:15:59] [INFO] step Character -> ok
+[2026-10-28 04:15:59] [INFO] inventory: fullSync=false changes=8
+[2026-10-28 04:15:59] [INFO] inventory: POST status=200
+[2026-10-28 04:15:59] [INFO] step Inventory -> ok
+[2026-10-28 04:15:59] [INFO] step Porter -> ok
+[2026-10-28 04:15:59] [INFO] step Progression -> ok
+[2026-10-28 04:15:59] [INFO] step Currencies -> ok
+[2026-10-28 04:15:59] [INFO] step Missions -> ok
+[2026-10-28 04:16:00] [INFO] step Collection -> ok
+[2026-10-28 04:16:00] [INFO] step Bazaar -> ok
+[2026-10-28 04:16:00] [INFO] 2 pending inventory move(s). Type //va moves execute to run them.
+[2026-10-28 04:16:00] [INFO] step Moves -> ok
+[2026-10-28 04:16:00] [INFO] sync summary: Taylormade, all 9 steps ok
+[2026-10-28 04:16:00] [SUCCESS] Sync complete for Taylormade. all 9 steps ok.
+[2026-10-28 05:15:58] [INFO] sync chain start (trigger=auto)
+[2026-10-28 05:15:59] [INFO] step Character -> ok
+[2026-10-28 05:15:59] [INFO] inventory: fullSync=false changes=4
+[2026-10-28 05:15:59] [INFO] inventory: POST status=200
+[2026-10-28 05:15:59] [INFO] step Inventory -> ok
+[2026-10-28 05:15:59] [INFO] step Porter -> ok
+[2026-10-28 05:15:59] [INFO] step Progression -> ok
+[2026-10-28 05:15:59] [INFO] step Currencies -> ok
+[2026-10-28 05:15:59] [INFO] step Missions -> ok
+[2026-10-28 05:16:00] [INFO] step Collection -> ok
+[2026-10-28 05:16:00] [INFO] step Bazaar -> ok
+[2026-10-28 05:16:00] [INFO] 2 pending inventory move(s). Type //va moves execute to run them.
+[2026-10-28 05:16:00] [INFO] step Moves -> ok
+[2026-10-28 05:16:00] [INFO] sync summary: Taylormade, all 9 steps ok
+[2026-10-28 05:16:00] [SUCCESS] Sync complete for Taylormade. all 9 steps ok.
+[2026-10-28 06:15:58] [INFO] sync chain start (trigger=auto)
+[2026-10-28 06:15:59] [INFO] step Character -> ok
+[2026-10-28 06:15:59] [INFO] inventory: fullSync=false changes=7
+[2026-10-28 06:15:59] [INFO] inventory: POST status=200
+[2026-10-28 06:15:59] [INFO] step Inventory -> ok
+[2026-10-28 06:15:59] [INFO] step Porter -> ok
+[2026-10-28 06:16:00] [INFO] step Progression -> ok
+[2026-10-28 06:16:00] [INFO] step Currencies -> ok
+[2026-10-28 06:16:00] [INFO] step Missions -> ok
+[2026-10-28 06:16:00] [INFO] step Collection -> ok
+[2026-10-28 06:16:00] [INFO] step Bazaar -> ok
+[2026-10-28 06:16:00] [INFO] 2 pending inventory move(s). Type //va moves execute to run them.
+[2026-10-28 06:16:00] [INFO] step Moves -> ok
+[2026-10-28 06:16:00] [INFO] sync summary: Taylormade, all 9 steps ok
+[2026-10-28 06:16:00] [SUCCESS] Sync complete for Taylormade. all 9 steps ok.
+[2026-10-28 07:15:58] [INFO] sync chain start (trigger=auto)
+[2026-10-28 07:16:08] [INFO] step Character -> ok
+[2026-10-28 07:16:08] [INFO] inventory: fullSync=false changes=6
+[2026-10-28 07:16:08] [INFO] inventory: POST status=200
+[2026-10-28 07:16:08] [INFO] step Inventory -> ok
+[2026-10-28 07:16:08] [INFO] step Porter -> ok
+[2026-10-28 07:16:09] [INFO] step Progression -> ok
+[2026-10-28 07:16:09] [INFO] step Currencies -> ok
+[2026-10-28 07:16:09] [INFO] step Missions -> ok
+[2026-10-28 07:16:09] [INFO] step Collection -> ok
+[2026-10-28 07:16:09] [INFO] step Bazaar -> ok
+[2026-10-28 07:16:09] [INFO] 2 pending inventory move(s). Type //va moves execute to run them.
+[2026-10-28 07:16:09] [INFO] step Moves -> ok
+[2026-10-28 07:16:09] [INFO] sync summary: Taylormade, all 9 steps ok
+[2026-10-28 07:16:09] [SUCCESS] Sync complete for Taylormade. all 9 steps ok.
+[2026-10-28 08:15:58] [INFO] sync chain start (trigger=auto)
+[2026-10-28 08:16:06] [INFO] step Character -> ok
+[2026-10-28 08:16:06] [INFO] inventory: fullSync=false changes=7
+[2026-10-28 08:16:06] [INFO] inventory: POST status=200
+[2026-10-28 08:16:06] [INFO] step Inventory -> ok
+[2026-10-28 08:16:06] [INFO] step Porter -> ok
+[2026-10-28 08:16:06] [INFO] step Progression -> ok
+[2026-10-28 08:16:06] [INFO] step Currencies -> ok
+[2026-10-28 08:16:06] [INFO] step Missions -> ok
+[2026-10-28 08:16:06] [INFO] step Collection -> ok
+[2026-10-28 08:16:06] [INFO] step Bazaar -> ok
+[2026-10-28 08:16:07] [INFO] 2 pending inventory move(s). Type //va moves execute to run them.
+[2026-10-28 08:16:07] [INFO] step Moves -> ok
+[2026-10-28 08:16:07] [INFO] sync summary: Taylormade, all 9 steps ok
+[2026-10-28 08:16:07] [SUCCESS] Sync complete for Taylormade. all 9 steps ok.
+[2026-10-28 09:15:58] [INFO] sync chain start (trigger=auto)
+[2026-10-28 09:16:08] [INFO] step Character -> ok
+[2026-10-28 09:16:08] [INFO] inventory: fullSync=false changes=7
+[2026-10-28 09:16:08] [INFO] inventory: POST status=200
+[2026-10-28 09:16:08] [INFO] step Inventory -> ok
+[2026-10-28 09:16:08] [INFO] step Porter -> ok
+[2026-10-28 09:16:08] [INFO] step Progression -> ok
+[2026-10-28 09:16:08] [INFO] step Currencies -> ok
+[2026-10-28 09:16:08] [INFO] step Missions -> ok
+[2026-10-28 09:16:09] [INFO] step Collection -> ok
+[2026-10-28 09:16:09] [INFO] step Bazaar -> ok
+[2026-10-28 09:16:09] [INFO] 2 pending inventory move(s). Type //va moves execute to run them.
+[2026-10-28 09:16:09] [INFO] step Moves -> ok
+[2026-10-28 09:16:09] [INFO] sync summary: Taylormade, all 9 steps ok
+[2026-10-28 09:16:09] [SUCCESS] Sync complete for Taylormade. all 9 steps ok.
+[2026-10-28 10:15:58] [INFO] sync chain start (trigger=auto)
+[2026-10-28 10:16:08] [INFO] step Character -> ok
+[2026-10-28 10:16:08] [INFO] inventory: fullSync=false changes=6
+[2026-10-28 10:16:08] [INFO] inventory: POST status=200
+[2026-10-28 10:16:08] [INFO] step Inventory -> ok
+[2026-10-28 10:16:08] [INFO] step Porter -> ok
+[2026-10-28 10:16:09] [INFO] step Progression -> ok
+[2026-10-28 10:16:09] [INFO] step Currencies -> ok
+[2026-10-28 10:16:09] [INFO] step Missions -> ok
+[2026-10-28 10:16:09] [INFO] step Collection -> ok
+[2026-10-28 10:16:09] [INFO] step Bazaar -> ok
+[2026-10-28 10:16:09] [INFO] 2 pending inventory move(s). Type //va moves execute to run them.
+[2026-10-28 10:16:09] [INFO] step Moves -> ok
+[2026-10-28 10:16:09] [INFO] sync summary: Taylormade, all 9 steps ok
+[2026-10-28 10:16:09] [SUCCESS] Sync complete for Taylormade. all 9 steps ok.
+[2026-10-28 11:15:58] [INFO] sync chain start (trigger=auto)
+[2026-10-28 11:16:07] [INFO] step Character -> ok
+[2026-10-28 11:16:07] [INFO] inventory: fullSync=false changes=6
+[2026-10-28 11:16:08] [INFO] inventory: POST status=200
+[2026-10-28 11:16:08] [INFO] step Inventory -> ok
+[2026-10-28 11:16:08] [INFO] step Porter -> ok
+[2026-10-28 11:16:08] [INFO] step Progression -> ok
+[2026-10-28 11:16:08] [INFO] step Currencies -> ok
+[2026-10-28 11:16:08] [INFO] step Missions -> ok
+[2026-10-28 11:16:08] [INFO] step Collection -> ok
+[2026-10-28 11:16:08] [INFO] step Bazaar -> ok
+[2026-10-28 11:16:09] [INFO] 2 pending inventory move(s). Type //va moves execute to run them.
+[2026-10-28 11:16:09] [INFO] step Moves -> ok
+[2026-10-28 11:16:09] [INFO] sync summary: Taylormade, all 9 steps ok
+[2026-10-28 11:16:09] [SUCCESS] Sync complete for Taylormade. all 9 steps ok.
+[2026-10-28 12:15:58] [INFO] sync chain start (trigger=auto)
+[2026-10-28 12:16:05] [INFO] step Character -> ok
+[2026-10-28 12:16:05] [INFO] inventory: fullSync=false changes=6
+[2026-10-28 12:16:05] [INFO] inventory: POST status=200
+[2026-10-28 12:16:05] [INFO] step Inventory -> ok
+[2026-10-28 12:16:06] [INFO] step Porter -> ok
+[2026-10-28 12:16:06] [INFO] step Progression -> ok
+[2026-10-28 12:16:06] [INFO] step Currencies -> ok
+[2026-10-28 12:16:06] [INFO] step Missions -> ok
+[2026-10-28 12:16:06] [INFO] step Collection -> ok
+[2026-10-28 12:16:06] [INFO] step Bazaar -> ok
+[2026-10-28 12:16:06] [INFO] 2 pending inventory move(s). Type //va moves execute to run them.
+[2026-10-28 12:16:06] [INFO] step Moves -> ok
+[2026-10-28 12:16:06] [INFO] sync summary: Taylormade, all 9 steps ok
+[2026-10-28 12:16:06] [SUCCESS] Sync complete for Taylormade. all 9 steps ok.
+[2026-10-28 13:15:58] [INFO] sync chain start (trigger=auto)
+[2026-10-28 13:16:07] [INFO] step Character -> ok
+[2026-10-28 13:16:07] [INFO] inventory: fullSync=false changes=6
+[2026-10-28 13:16:08] [INFO] inventory: POST status=200
+[2026-10-28 13:16:08] [INFO] step Inventory -> ok
+[2026-10-28 13:16:08] [INFO] step Porter -> ok
+[2026-10-28 13:16:08] [INFO] step Progression -> ok
+[2026-10-28 13:16:08] [INFO] step Currencies -> ok
+[2026-10-28 13:16:08] [INFO] step Missions -> ok
+[2026-10-28 13:16:08] [INFO] step Collection -> ok
+[2026-10-28 13:16:08] [INFO] step Bazaar -> ok
+[2026-10-28 13:16:09] [INFO] 2 pending inventory move(s). Type //va moves execute to run them.
+[2026-10-28 13:16:09] [INFO] step Moves -> ok
+[2026-10-28 13:16:09] [INFO] sync summary: Taylormade, all 9 steps ok
+[2026-10-28 13:16:09] [SUCCESS] Sync complete for Taylormade. all 9 steps ok.
+[2026-10-28 19:17:19] [INFO] --- session start | vanalytics 1.0.91 | url=https://vanalytics.soverance.com ---
+[2026-10-28 19:17:19] [INFO] character: Socoxak
+[2026-10-28 19:17:19] [INFO] Augment backfill: next sync will be a full inventory re-sync.
+[2026-10-28 19:17:19] [INFO] Loaded.
+[2026-10-28 19:17:19] [ERROR] No API key configured. Run: //vanalytics apikey <your-key>
+[2026-10-28 19:18:59] [SUCCESS] API key saved.
+[2026-10-28 19:19:18] [INFO] Syncing...
+[2026-10-28 19:19:18] [INFO] sync chain start (trigger=manual)
+[2026-10-28 19:19:28] [INFO] step Character -> ok
+[2026-10-28 19:19:28] [INFO] inventory: fullSync=true changes=213
+[2026-10-28 19:19:28] [INFO] inventory: POST status=200
+[2026-10-28 19:19:28] [INFO] step Inventory -> ok
+[2026-10-28 19:19:28] [INFO] step Porter -> ok
+[2026-10-28 19:19:28] [INFO] step Progression -> ok
+[2026-10-28 19:19:28] [INFO] step Currencies -> ok
+[2026-10-28 19:19:28] [INFO] step Missions -> ok
+[2026-10-28 19:19:28] [INFO] step Collection -> ok
+[2026-10-28 19:19:28] [INFO] step Bazaar -> ok
+[2026-10-28 19:19:29] [INFO] step Moves -> ok
+[2026-10-28 19:19:29] [INFO] sync summary: Socoxak, all 9 steps ok
+[2026-10-28 19:19:29] [SUCCESS] Sync complete for Socoxak. all 9 steps ok.

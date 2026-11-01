@@ -1,0 +1,180 @@
+import { useState, useEffect } from 'react'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { AuthProvider } from './context/AuthContext'
+import { useAuth } from './context/AuthContext'
+import Layout from './components/Layout'
+import ProtectedRoute from './components/ProtectedRoute'
+import OAuthCallback from './pages/OAuthCallback'
+import LandingPage from './pages/LandingPage'
+import CharactersPage from './pages/CharactersPage'
+import CharacterDetailPage from './pages/CharacterDetailPage'
+import ProfilePage from './pages/ProfilePage'
+import SetupGuidePage from './pages/SetupGuidePage'
+import ServerStatusDashboard from './pages/ServerStatusDashboard'
+import AdminUsersPage from './pages/AdminUsersPage'
+import AdminItemsPage from './pages/AdminItemsPage'
+import AdminSamlPage from './pages/AdminSamlPage'
+import AdminReportsPage from './pages/AdminReportsPage'
+import AdminEconomyPage from './pages/AdminEconomyPage'
+import AdminAchievementsPage from './pages/AdminAchievementsPage'
+import ItemDatabasePage from './pages/ItemDatabasePage'
+import ItemDetailPage from './pages/ItemDetailPage'
+// import BazaarActivityPage from './pages/BazaarActivityPage' // hidden until bazaar sync bugs resolved
+import VanadielClockPage from './pages/VanadielClockPage'
+import PublicProfilePage from './pages/PublicProfilePage'
+import { FfxiFileSystemProvider } from './context/FfxiFileSystemContext'
+import ModelDebugPage from './pages/ModelDebugPage'
+import SessionReportPage from './pages/SessionReportPage'
+import BlueprintEditorPage from './pages/BlueprintEditorPage'
+import NpcBrowserPage from './pages/NpcBrowserPage'
+import ZoneBrowserPage from './pages/ZoneBrowserPage'
+import ForumCategoryListPage from './pages/ForumCategoryListPage'
+import ForumThreadListPage from './pages/ForumThreadListPage'
+import ForumThreadPage from './pages/ForumThreadPage'
+import ForumNewThreadPage from './pages/ForumNewThreadPage'
+import ForumSearchPage from './pages/ForumSearchPage'
+import UserProfilePage from './pages/UserProfilePage'
+import PlayerDirectoryPage from './pages/PlayerDirectoryPage'
+import LinkshellDirectoryPage from './pages/LinkshellDirectoryPage'
+import LinkshellProfilePage from './pages/LinkshellProfilePage'
+import LinkshellManagePage from './pages/LinkshellManagePage'
+import RecipeBrowserPage from './pages/RecipeBrowserPage'
+import RecipeDetailPage from './pages/RecipeDetailPage'
+import MessagesPage from './pages/MessagesPage'
+import LeaderboardsPage from './pages/LeaderboardsPage'
+import RubricPage from './pages/RubricPage'
+
+
+function SamlCodeHandler() {
+  const { samlExchange } = useAuth()
+  const [error, setError] = useState('')
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const code = params.get('saml_code')
+    const samlError = params.get('error')
+
+    if (samlError) {
+      const messages: Record<string, string> = {
+        saml_failed: 'SSO authentication failed. Please try again.',
+        no_username: 'No username was returned by the identity provider.',
+        no_account: 'No matching account found. Contact your administrator.',
+        disabled: 'Your account has been disabled.',
+        saml_disabled: 'SSO is not currently enabled.',
+      }
+      setError(messages[samlError] || 'Authentication failed.')
+      const url = new URL(window.location.href)
+      url.searchParams.delete('error')
+      window.history.replaceState({}, '', url.toString())
+      return
+    }
+
+    if (!code) return
+
+    const url = new URL(window.location.href)
+    url.searchParams.delete('saml_code')
+    window.history.replaceState({}, '', url.toString())
+
+    samlExchange(code).catch(() => {
+      setError('SSO login failed. Please try again.')
+    })
+  }, [])
+
+  if (error) {
+    return (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
+        <div className="rounded-lg border border-gray-800 bg-gray-900 p-8 max-w-md mx-4 text-center">
+          <p className="text-red-400 mb-4">{error}</p>
+          <button
+            onClick={() => setError('')}
+            className="text-blue-400 hover:underline text-sm"
+          >
+            Dismiss
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  return null
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <AuthProvider>
+        <SamlCodeHandler />
+        <Routes>
+          {/* Public: landing page (no layout) */}
+          <Route path="/" element={<LandingPage />} />
+
+          {/* OAuth callback */}
+          <Route path="/oauth/callback" element={<OAuthCallback />} />
+
+          {/* Redirect /login to landing page */}
+          <Route path="/login" element={<Navigate to="/" replace />} />
+
+          {/* App pages with sidebar layout */}
+          <Route element={<Layout />}>
+            {/* Public server routes (no auth required) */}
+            <Route path="/server/status" element={<ServerStatusDashboard />} />
+            <Route path="/server/clock" element={<VanadielClockPage />} />
+
+            {/* Redirects for old routes */}
+            <Route path="/servers" element={<Navigate to="/server/status" replace />} />
+            <Route path="/clock" element={<Navigate to="/server/clock" replace />} />
+
+            {/* Protected routes */}
+            <Route path="/characters" element={<CharactersPage />} />
+            <Route path="/characters/:id" element={<ProtectedRoute><CharacterDetailPage /></ProtectedRoute>} />
+            <Route path="/characters/:id/blueprint/:job" element={<ProtectedRoute><BlueprintEditorPage /></ProtectedRoute>} />
+            <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+            <Route path="/items" element={<ItemDatabasePage />} />
+            <Route path="/items/:id" element={<ItemDetailPage />} />
+            {/* <Route path="/bazaar" element={<ProtectedRoute><BazaarActivityPage /></ProtectedRoute>} /> */}
+            <Route path="/setup" element={<SetupGuidePage />} />
+            <Route path="/admin/users" element={<ProtectedRoute requiredRole="Admin"><AdminUsersPage /></ProtectedRoute>} />
+            <Route path="/admin/data" element={<ProtectedRoute requiredRole="Admin"><AdminItemsPage /></ProtectedRoute>} />
+            <Route path="/admin/saml" element={<ProtectedRoute requiredRole="Admin"><AdminSamlPage /></ProtectedRoute>} />
+            <Route path="/admin/reports" element={<ProtectedRoute requiredRole="Admin"><AdminReportsPage /></ProtectedRoute>} />
+            <Route path="/admin/economy" element={<ProtectedRoute requiredRole="Admin"><AdminEconomyPage /></ProtectedRoute>} />
+            <Route path="/admin/achievements" element={<ProtectedRoute requiredRole="Admin"><AdminAchievementsPage /></ProtectedRoute>} />
+            <Route path="/npcs" element={<NpcBrowserPage />} />
+            <Route path="/zones" element={<ZoneBrowserPage />} />
+            <Route path="/recipes" element={<RecipeBrowserPage />} />
+            <Route path="/recipes/:id" element={<RecipeDetailPage />} />
+            <Route path="/sessions/:id" element={<ProtectedRoute><SessionReportPage /></ProtectedRoute>} />
+            <Route path="/debug/models" element={<ProtectedRoute><ModelDebugPage /></ProtectedRoute>} />
+
+            {/* Public forum routes */}
+            <Route path="/forum" element={<ForumCategoryListPage />} />
+            <Route path="/forum/search" element={<ForumSearchPage />} />
+            <Route path="/forum/:categorySlug" element={<ForumThreadListPage />} />
+            <Route path="/forum/:categorySlug/new" element={<ProtectedRoute><ForumNewThreadPage /></ProtectedRoute>} />
+            <Route path="/forum/:categorySlug/:threadSlug" element={<ForumThreadPage />} />
+            <Route path="/users/:username" element={<UserProfilePage />} />
+            <Route path="/players" element={<PlayerDirectoryPage />} />
+            <Route path="/linkshells" element={<LinkshellDirectoryPage />} />
+            <Route path="/messages" element={<ProtectedRoute><MessagesPage /></ProtectedRoute>} />
+            <Route path="/messages/:conversationId" element={<ProtectedRoute><MessagesPage /></ProtectedRoute>} />
+            <Route path="/leaderboards" element={<LeaderboardsPage />} />
+            <Route path="/leaderboards/rubric" element={<RubricPage />} />
+          </Route>
+
+          {/* Public: shareable linkshell profiles (3-segment, before /:server/:name) */}
+          <Route path="/:server/linkshell/:name" element={<LinkshellProfilePage />} />
+
+          {/* Manage (authenticated; eligibility re-checked server-side) */}
+          <Route path="/:server/linkshell/:name/manage" element={<ProtectedRoute><LinkshellManagePage /></ProtectedRoute>} />
+
+          {/* Public: shareable character profiles (MUST be after explicit routes) */}
+          <Route path="/:server/:name" element={
+            <FfxiFileSystemProvider>
+              <PublicProfilePage />
+            </FfxiFileSystemProvider>
+          } />
+        </Routes>
+      </AuthProvider>
+    </BrowserRouter>
+  )
+}

@@ -1,0 +1,7 @@
+{
+    "PORT": 62650,
+    "WEB_PORT": 8085,
+    "GEMINI_API_KEY": "AQ.Ab8RN6LsoW3yPg52IhRUICIqAwImDt3i4bW8OpsS85ackL9g6w",
+    "MODEL_NAME": "gemini-flash-lite-latest",
+    "USER_LANG": "EN"
+}

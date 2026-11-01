@@ -1,0 +1,15 @@
+﻿```
+[ 4.7.9.3 (stable) ] 2026-10-21 23:41:06.9983852 UTC
+---------------------------------------------------------------------
+System.ComponentModel.Win32Exception (0x80004005): The requested operation requires elevation
+   at Launcher.Injector.Launch(String hookPath, Version hookVersion, Profile profile)
+   at Launcher.Tasks.LaunchTask.Run()
+   at Launcher.Tasks.Task.Run(Core core)
+   at Launcher.Core.Run()
+   at System.Threading.ThreadHelper.ThreadStart_Context(Object state)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   at System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state)
+   at System.Threading.ThreadHelper.ThreadStart()
+```
+

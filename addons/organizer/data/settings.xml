@@ -1,0 +1,56 @@
+<?xml version="1.1" ?>
+<settings>
+    <global>
+        <auto_heal>false</auto_heal>
+        <bag_priority>
+            <Wardrobe>1</Wardrobe>
+            <Wardrobe2>2</Wardrobe2>
+            <Wardrobe3>3</Wardrobe3>
+            <Wardrobe4>4</Wardrobe4>
+            <Case>5</Case>
+            <Sack>6</Sack>
+            <Satchel>7</Satchel>
+            <Inventory>8</Inventory>
+            <Locker>9</Locker>
+            <Safe>10</Safe>
+            <Safe2>11</Safe2>
+            <Storage>12</Storage>
+            <Wardrobe5>13</Wardrobe5>
+            <Wardrobe6>14</Wardrobe6>
+            <Wardrobe7>15</Wardrobe7>
+            <Wardrobe8>16</Wardrobe8>
+        </bag_priority>
+        <default_file>default.lua</default_file>
+        <dump_bags>
+            <Wardrobe>1</Wardrobe>
+            <Wardrobe2>2</Wardrobe2>
+            <Wardrobe3>3</Wardrobe3>
+            <Wardrobe4>4</Wardrobe4>
+            <Wardrobe5>5</Wardrobe5>
+            <Wardrobe6>6</Wardrobe6>
+            <Wardrobe7>7</Wardrobe7>
+            <Wardrobe8>8</Wardrobe8>
+            <Safe>9</Safe>
+            <Safe2>10</Safe2>
+            <Locker>11</Locker>
+            <Storage>12</Storage>
+        </dump_bags>
+        <ignore>
+            <Inventory>
+                <item>Warp Ring</item>
+                <item>Dim. Ring (Dem)</item>
+                <item>Trizek Ring</item>
+                <item>Echad Ring</item>
+                <item>Echad Ring</item>
+            </Inventory>
+        </ignore>
+        <item_delay>0</item_delay>
+        <retain>
+            <items>false</items>
+            <moogle_slip_gear>false</moogle_slip_gear>
+            <seals>false</seals>
+            <slips>false</slips>
+        </retain>
+        <verbose>false</verbose>
+    </global>
+</settings>

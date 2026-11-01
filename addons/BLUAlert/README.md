@@ -1,0 +1,3 @@
+This add-on will send a /party chat message when a monster uses a Blue Magic spell that you don't know.
+
+

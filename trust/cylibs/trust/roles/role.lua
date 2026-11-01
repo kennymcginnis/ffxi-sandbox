@@ -1,0 +1,128 @@
+local Role = {}
+Role.__index = Role
+
+local display_names = {
+    aftermather = 'Aftermath',
+    attacker = 'Attacking',
+    barspeller = 'Barspells',
+    bubbler = 'Geomancy',
+    buffer = 'Buffs',
+    cleaver = 'Cleave',
+    combatmode = 'Combat',
+    debuffer = 'Debuffs',
+    dispeler = 'Dispel',
+    follower = 'Following',
+    gambiter = 'Gambits',
+    healer = 'Healing',
+    magicburster = 'Magic Bursts',
+    nuker = 'Nukes',
+    pather = 'Paths',
+    puller = 'Pulling',
+    reacter = 'Reactions',
+    role = 'Role',
+    roller = 'Rolls',
+    shooter = 'Shooting',
+    skillchainer = 'Weaponskills',
+    singer = 'Songs',
+    sleeper = 'Sleep',
+    spammer = 'Weaponskill Spam',
+    statusremover = 'Ailments',
+    truster = 'Alter Egos',
+}
+
+function Role.new(action_queue, job)
+    local self = setmetatable({
+        action_queue = action_queue;
+        job = job;
+        target_index = nil;
+        last_tic_time = os.time();
+    }, Role)
+
+    return self
+end
+
+function Role:destroy()
+end
+
+function Role:on_add()
+end
+
+function Role:target_change(target_index)
+    self.target_index = target_index
+end
+
+function Role:tic(new_time, old_time)
+end
+
+function Role:allows_duplicates()
+    return false
+end
+
+function Role:get_type()
+    return "role"
+end
+
+function Role.get_display_name_for_type(role_type)
+    return display_names[role_type] or role_type
+end
+
+function Role:get_display_name()
+    return Role.get_display_name_for_type(self:get_type())
+end
+
+function Role:get_localized_name()
+    return self:get_type()
+end
+
+function Role:set_player(player)
+    self.player = player
+end
+
+function Role:get_player()
+    return self.player
+end
+
+function Role:set_alliance(alliance)
+    self.alliance = alliance
+end
+
+function Role:get_alliance()
+    return self.alliance
+end
+
+function Role:set_party(party)
+    self.party = party
+end
+
+function Role:get_party()
+    return self.party
+end
+
+function Role:set_job(job)
+    self.job = job
+end
+
+function Role:get_job()
+    return self.job
+end
+
+function Role:get_target()
+    if self.target_index then
+        return self:get_alliance():get_target_by_index(self.target_index)
+    end
+    return nil
+end
+
+function Role:set_last_tic_time(last_tic_time)
+    self.last_tic_time = last_tic_time
+end
+
+function Role:get_last_tic_time()
+    return self.last_tic_time
+end
+
+function Role:tostring()
+    return nil
+end
+
+return Role

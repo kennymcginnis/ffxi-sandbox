@@ -1,0 +1,7 @@
+alias invis invisible
+alias jig cancel sneak; cancel invisible; wait 1; input /ja "Spectral Jig" <me>
+alias elegy1 input /ma "Battlefield Elegy"
+alias elegy2 input /ma "Carnage Elegy"
+alias march1 input /ma "Advancing March"
+alias march2 input /ma "Victory March"
+alias requiem7 input /ma "Foe Requiem VII"
