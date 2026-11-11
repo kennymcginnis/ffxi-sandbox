@@ -48,17 +48,17 @@
             <target>false</target>
         </alliance>
         <others> <!-- Some guy nearby is doing something -->
-            <melee>false</melee>
-            <ranged>false</ranged>
-            <damage>false</damage>
-            <healing>false</healing>
-            <misses>false</misses>
-            <items>false</items>
-            <uses>false</uses>
-            <readies>false</readies>
-            <casting>false</casting>
-            <all>false</all>
-            <target>false</target>
+            <melee>true</melee>
+            <ranged>true</ranged>
+            <damage>true</damage>
+            <healing>true</healing>
+            <misses>true</misses>
+            <items>true</items>
+            <uses>true</uses>
+            <readies>true</readies>
+            <casting>true</casting>
+            <all>true</all>
+            <target>true</target>
         </others>
         <my_pet> <!-- Your pet is doing something -->
             <melee>false</melee>
@@ -83,15 +83,15 @@
             <target>false</target>
         </my_fellow>
         <other_pets> <!-- Someone else's pet is doing something -->
-            <melee>false</melee>
-            <ranged>false</ranged>
-            <damage>false</damage>
-            <healing>false</healing>
-            <misses>false</misses>
-            <readies>false</readies>
-            <casting>false</casting>
-            <all>false</all>
-            <target>false</target>
+            <melee>true</melee>
+            <ranged>true</ranged>
+            <damage>true</damage>
+            <healing>true</healing>
+            <misses>true</misses>
+            <readies>true</readies>
+            <casting>true</casting>
+            <all>true</all>
+            <target>true</target>
         </other_pets>
 
         <enemies> <!-- Monster that your party has claimed doing something with one of the below targets -->
@@ -132,16 +132,16 @@
                 <all>false</all>
             </alliance>
             <others> <!-- He's targeting some guy nearby -->
-                <melee>false</melee>
-                <ranged>false</ranged>
-                <damage>false</damage>
-                <healing>false</healing>
-                <misses>false</misses>
-                <items>false</items>
-                <uses>false</uses>
-                <readies>false</readies>
-                <casting>false</casting>
-                <all>false</all>
+                <melee>true</melee>
+                <ranged>true</ranged>
+                <damage>true</damage>
+                <healing>true</healing>
+                <misses>true</misses>
+                <items>true</items>
+                <uses>true</uses>
+                <readies>true</readies>
+                <casting>true</casting>
+                <all>true</all>
             </others>
             <my_pet> <!-- He's targeting your pet -->
                 <melee>false</melee>
@@ -168,16 +168,16 @@
                 <all>false</all>
             </my_fellow>
             <other_pets> <!-- He's targeting someone else's pet -->
-                <melee>false</melee>
-                <ranged>false</ranged>
-                <damage>false</damage>
-                <healing>false</healing>
-                <misses>false</misses>
-                <items>false</items>
-                <uses>false</uses>
-                <readies>false</readies>
-                <casting>false</casting>
-                <all>false</all>
+                <melee>true</melee>
+                <ranged>true</ranged>
+                <damage>true</damage>
+                <healing>true</healing>
+                <misses>true</misses>
+                <items>true</items>
+                <uses>true</uses>
+                <readies>true</readies>
+                <casting>true</casting>
+                <all>true</all>
             </other_pets>
             <enemies> <!-- He's targeting himself or another monster your party has claimed -->
                 <melee>false</melee>
@@ -243,16 +243,16 @@
                 <all>false</all>
             </alliance>
             <others> <!-- He's targeting some guy nearby -->
-                <melee>false</melee>
-                <ranged>false</ranged>
-                <damage>false</damage>
-                <healing>false</healing>
-                <misses>false</misses>
-                <items>false</items>
-                <uses>false</uses>
-                <readies>false</readies>
-                <casting>false</casting>
-                <all>false</all>
+                <melee>true</melee>
+                <ranged>true</ranged>
+                <damage>true</damage>
+                <healing>true</healing>
+                <misses>true</misses>
+                <items>true</items>
+                <uses>true</uses>
+                <readies>true</readies>
+                <casting>true</casting>
+                <all>true</all>
             </others>
             <my_pet> <!-- He's targeting your pet -->
                 <melee>false</melee>
@@ -279,16 +279,16 @@
                 <all>false</all>
             </my_fellow>
             <other_pets> <!-- He's targeting someone else's pet -->
-                <melee>false</melee>
-                <ranged>false</ranged>
-                <damage>false</damage>
-                <healing>false</healing>
-                <misses>false</misses>
-                <items>false</items>
-                <uses>false</uses>
-                <readies>false</readies>
-                <casting>false</casting>
-                <all>false</all>
+                <melee>true</melee>
+                <ranged>true</ranged>
+                <damage>true</damage>
+                <healing>true</healing>
+                <misses>true</misses>
+                <items>true</items>
+                <uses>true</uses>
+                <readies>true</readies>
+                <casting>true</casting>
+                <all>true</all>
             </other_pets>
             <enemies> <!-- He's targeting a monster your party has claimed -->
                 <melee>false</melee>

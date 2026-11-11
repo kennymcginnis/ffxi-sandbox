@@ -5,12 +5,14 @@ include("common")
 -- Do not delete this line.
 sets = {}
 sets.default = {
-	main = "Kaja Knife",
-	sub = "Homestead Dagger",
+	main = "Thief's Knife",
+	sub = "Kaja Knife",
+	-- main = "Kaja Knife",
+	-- sub = "Homestead Dagger",
 	range = "Chakram",
 	head = "Mummu Bonnet",
 	body = "Olorun Harness",
-	hands = "SV Gauntlets +1",
+	hands = "Olorun Gloves",
 	legs = "SV Loincloth +1",
 	feet = "Olorun boots",
 	neck = "Sanctity necklace",
@@ -23,7 +25,7 @@ sets.default = {
 }
 
 sets.idle = set_combine(sets.default, {
-	-- left_ring = "Shneddick Ring",
+	left_ring = "Shneddick Ring",
 })
 
 sets.precast = {}
@@ -37,13 +39,13 @@ function get_sets()
 	-- Registering your custom aliases
 	windower.send_command('alias thf_buffs input /ja "Haste Samba" <me>; wait 2; input /ja "Conspirator" <me>;')
 	windower.send_command(
-		'alias thf_sa_evis input /turnat; wait 0.5; input /ja "Sneak Attack" <me>; wait 1.0; input /ws "Evisceration" <t>'
+		'alias thf_sa_evis input /turnat; wait 0.5; input /ja "Sneak Attack" <me>; wait 0.5; input /ws "Evisceration" <t>'
 	)
 	windower.send_command(
-		'alias thf_ta_evis input /turnat; wait 0.5; input /ja "Trick Attack" <me>; wait 1.0; input /ws "Evisceration" <t>'
+		'alias thf_ta_evis input /turnat; wait 0.5; input /ja "Trick Attack" <me>; wait 0.5; input /ws "Evisceration" <t>'
 	)
 	windower.send_command(
-		'alias bully_sata_evis input /ja "Bully" <t>; wait 1.2; input /turnat; wait 0.5; input /ja "Sneak Attack" <me>; wait 1.2; input /ja "Trick Attack" <me>; wait 1.2; input /ws "Evisceration" <t>'
+		'alias bully_sata_evis input /ja "Bully" <t>; wait 1.0; input /turnat; wait 0.5; input /ja "Sneak Attack" <me>; wait 1.2; input /ja "Trick Attack" <me>; wait 1.2; input /ws "Evisceration" <t>'
 	)
 
 	-- Binding your physical hotkeys
@@ -58,8 +60,6 @@ function precast(spell)
 		equip(sets.precast.WS)
 	end
 end
-
-
 
 function job_aftercast(spell)
 	if spell.type == "WeaponSkill" then

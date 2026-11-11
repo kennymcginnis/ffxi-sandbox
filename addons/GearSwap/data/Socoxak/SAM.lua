@@ -5,25 +5,28 @@ include("common")
 -- Do not delete this line.
 sets = {}
 sets.default = {
-	main = "Kaja Tachi",
+	-- main = "Kaja Tachi",
+	main = "Spear of trials",
 	sub = "Pole Grip",
 	ammo = "Jukukik Feather",
-	head = "Flamma Zucchetto",
+	head = "Ruwa armet",
 	body = "Ruwa Breastplate",
-	hands = "Flamma Manopolas",
-	legs = "Flamma Dirs",
-	feet = "Flamma Gambieras",
+	hands = "Ruwa Gauntlets",
+	legs = "Ruwa hose",
+	feet = "Ruwa Leggings",
 	neck = "Samurai's Nodowa",
 	waist = "Gerdr Belt",
 	left_ear = "Brutal Earring",
 	right_ear = "Tati Earring",
-	left_ring = "Jaeger Ring",
+	left_ring = "Flamma Ring",
 	right_ring = "Chirich Ring",
 	back = "Aptitude Mantle +1",
 }
 
 sets.idle = set_combine(sets.default, {
 	left_ring = "Shneddick Ring",
+	-- legs = "Track Pants +1",
+	-- feet = empty,
 })
 
 function get_sets()
@@ -35,8 +38,8 @@ function get_sets()
 	windower.send_command('alias tachi_gekko input /ja "Sekkanoki" <me>; wait 1.2; input /ws "Tachi: Gekko" <t>')
 
 	-- Binding your physical hotkeys
-	windower.send_command("bind ^` input /ra <stnpc>")
-	windower.send_command("bind !` input /ja Provoke <stnpc>")
+	windower.send_command("bind ^` input /ja Provoke <stnpc>")
+	windower.send_command("bind !` input /ra <stnpc>")
 	windower.send_command("bind !1 sam_buffs")
 	windower.send_command('bind !2 input /ja "Meditate" <me>')
 	windower.send_command("bind !3 tachi_gekko")

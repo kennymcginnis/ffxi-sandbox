@@ -1,7 +1,7 @@
 """
 FFXI Unified Tactical Switchboard & Contextual Translator
 Version: 9.1 Universal
-Authors: Gemini / Eloleto (Jim & I)
+Authors: Gemini / Taylormade (Jim & I)
 """
 
 import sys
@@ -57,23 +57,23 @@ DEFAULT_CONFIG = {
     "USER_LANG": "EN",
     "LOCK_PASSWORD": "password123",
     "LOCK_OPACITY": 0.20,
-    "LEADER_NAME": "Eloleto",
-    "CHARACTERS": ["Eloleto", "Loeleto", "Oletole"],
+    "LEADER_NAME": "Taylormade",
+    "CHARACTERS": ["Taylormade", "Socoxak"], # , "Oletole"
     "SE_PASSWORD": "",
     "POL_INITIAL_DELAY": 12.0,
-    "POL_ACCOUNTS": {"Eloleto": 1, "Loeleto": 2, "Oletole": 3},
+    "POL_ACCOUNTS": {"Taylormade": 1, "Socoxak": 2}, # , "Oletole": 3
     "WINDOWER_PATH": r"C:\Program Files (x86)\Windower\Windower.exe",
-    "WINDOWER_PROFILES": {"Eloleto": "Eloleto", "Loeleto": "Loeleto", "Oletole": "Oletole"},
-    "MAIN_TV_POS": {"x": 268, "y": -1080, "width": 1920, "height": 1080},
+    "WINDOWER_PROFILES": {"Taylormade": "Taylormade", "Socoxak": "Socoxak"}, # , "Oletole": "Oletole"
+    "MAIN_TV_POS": {"x": -1920, "y": 0, "width": 1920, "height": 1080},
     "SLOTS": {
-        "Eloleto": {"x": 1720, "y": 0,   "width": 840, "height": 470},
-        "Loeleto": {"x": 1720, "y": 480, "width": 840, "height": 470},
-        "Oletole": {"x": 1720, "y": 960, "width": 840, "height": 470},
+        "Taylormade": {"x": 1920, "y": 0, "width": 1920, "height": 1080},
+        "Socoxak": {"x": 0, "y": 0, "width": 1920, "height": 1080},
+        # "Oletole": {"x": 1720, "y": 960, "width": 840, "height": 470},
     },
     "TRUST_MODES": {
-        "Eloleto": {"AutoBuffMode": "Off", "AutoHealMode": "Off", "AutoStatusRemovalMode": "Off", "AutoEngageMode": "Off", "AutoSkillchainMode": "Off", "AutoFollowMode": "Always", "AutoCampMode": "Off", "AutoPullMode": "Off", "CombatMode": "Off", "FlankMode": "Off"},
-        "Loeleto": {"AutoBuffMode": "Auto", "AutoHealMode": "Auto", "AutoStatusRemovalMode": "Auto", "AutoEngageMode": "Always", "AutoSkillchainMode": "Off", "AutoFollowMode": "Always", "AutoCampMode": "Off", "AutoPullMode": "Off", "CombatMode": "Auto", "FlankMode": "Off"},
-        "Oletole": {"AutoBuffMode": "Auto", "AutoHealMode": "Off", "AutoStatusRemovalMode": "Off", "AutoEngageMode": "Always", "AutoSkillchainMode": "Auto", "AutoFollowMode": "Always", "AutoCampMode": "Off", "AutoPullMode": "Off", "CombatMode": "Auto", "FlankMode": "Off"}
+        "Taylormade": {"AutoBuffMode": "Off", "AutoHealMode": "Off", "AutoStatusRemovalMode": "Off", "AutoEngageMode": "Off", "AutoSkillchainMode": "Off", "AutoFollowMode": "Always", "AutoCampMode": "Off", "AutoPullMode": "Off", "CombatMode": "Off", "FlankMode": "Off"},
+        "Socoxak": {"AutoBuffMode": "Auto", "AutoHealMode": "Auto", "AutoStatusRemovalMode": "Auto", "AutoEngageMode": "Always", "AutoSkillchainMode": "Off", "AutoFollowMode": "Always", "AutoCampMode": "Off", "AutoPullMode": "Off", "CombatMode": "Auto", "FlankMode": "Off"},
+        # "Oletole": {"AutoBuffMode": "Auto", "AutoHealMode": "Off", "AutoStatusRemovalMode": "Off", "AutoEngageMode": "Always", "AutoSkillchainMode": "Auto", "AutoFollowMode": "Always", "AutoCampMode": "Off", "AutoPullMode": "Off", "CombatMode": "Auto", "FlankMode": "Off"}
     }
 }
 
@@ -197,7 +197,7 @@ def save_config(config_data):
         print(f"[-] Config Save Error: {e}")
 
 CONFIG = load_config()
-CHARACTERS = CONFIG.get("CHARACTERS", ["Eloleto", "Loeleto", "Oletole"])
+CHARACTERS = CONFIG.get("CHARACTERS", ["Taylormade", "Socoxak"]) # , "Oletole"
 current_active_index = 0
 
 LOG_LOCK = threading.Lock()
@@ -411,6 +411,22 @@ def force_foreground_window(hwnd):
             if target_thread != curr_thread: win32process.AttachThreadInput(curr_thread, target_thread, False)
         except Exception: pass
 
+def make_window_borderless(hwnd):
+    style = win32gui.GetWindowLong(hwnd, win32con.GWL_STYLE)
+    frame_styles = win32con.WS_CAPTION | win32con.WS_THICKFRAME | win32con.WS_BORDER | win32con.WS_DLGFRAME
+    if style & frame_styles:
+        win32gui.SetWindowLong(hwnd, win32con.GWL_STYLE, style & ~frame_styles)
+        win32gui.SetWindowPos(
+            hwnd,
+            0,
+            0,
+            0,
+            0,
+            0,
+            win32con.SWP_NOMOVE | win32con.SWP_NOSIZE | win32con.SWP_NOZORDER
+            | win32con.SWP_NOACTIVATE | win32con.SWP_FRAMECHANGED,
+        )
+
 def apply_layout(active_char_name, gui_hwnd):
     global last_known_slots
     find_running_windows()
@@ -423,6 +439,7 @@ def apply_layout(active_char_name, gui_hwnd):
             if hwnd and win32gui.IsWindow(hwnd):
                 pos = slots.get(char, {"x": 1720, "y": 0, "width": 840, "height": 470})
                 current_state = (hwnd, pos["x"], pos["y"], pos["width"], pos["height"], "IDLE")
+                make_window_borderless(hwnd)
                 if last_known_slots.get(char) != current_state:
                     try:
                         win32gui.SetWindowPos(hwnd, win32con.HWND_NOTOPMOST, pos["x"], pos["y"], pos["width"], pos["height"], win32con.SWP_SHOWWINDOW | win32con.SWP_NOACTIVATE | win32con.SWP_NOZORDER | win32con.SWP_NOCOPYBITS)
@@ -441,6 +458,7 @@ def apply_layout(active_char_name, gui_hwnd):
     active_hwnd = character_hwnds.get(active_char_name)
     if active_hwnd and win32gui.IsWindow(active_hwnd):
         active_state = (active_hwnd, main_pos["x"], main_pos["y"], main_pos["width"], main_pos["height"], "ACTIVE")
+        make_window_borderless(active_hwnd)
         if last_known_slots.get(active_char_name) != active_state:
             try:
                 win32gui.SetWindowPos(active_hwnd, win32con.HWND_TOP, main_pos["x"], main_pos["y"], main_pos["width"], main_pos["height"], win32con.SWP_SHOWWINDOW)
@@ -748,6 +766,10 @@ class UnifiedWorker(QThread):
                 if char_name in self.command_queues and len(self.command_queues[char_name]) > 0:
                     bot_payload = self.command_queues[char_name].pop(0)
                     cmds = bot_payload.get("commands", [])
+                    if cmds:
+                        self.log_signal.emit(
+                            f"[Bridge Debug] Sending to {char_name}: {' | '.join(cmds)}"
+                        )
 
                 trans_items = []
                 with LOG_LOCK:
@@ -1142,7 +1164,7 @@ class MasterControlGUI(QMainWindow):
             self.char_buttons[char] = c_btn
             box_layout.addWidget(c_btn)
 
-            a_lbl = QLabel(f"Assist: {CONFIG.get('LEADER_NAME', 'Eloleto')}")
+            a_lbl = QLabel(f"Assist: {CONFIG.get('LEADER_NAME', 'Taylormade')}")
             a_lbl.setAlignment(Qt.AlignCenter)
             a_lbl.setFont(QFont("Consolas", 8))
             a_lbl.setStyleSheet("color: #00E5FF; padding-bottom: 2px;")

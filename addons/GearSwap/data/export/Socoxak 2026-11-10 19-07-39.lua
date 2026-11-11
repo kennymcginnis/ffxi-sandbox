@@ -1,0 +1,17 @@
+sets.default = {
+    main="Vorpal Sword",
+    sub="Ammurapi Shield",
+    range="Mamoolbane",
+    head="Aya. Zucchetto",
+    body="Ayanmo Corazza",
+    hands="Aya. Manopolas",
+    legs="Egbesu Slops",
+    feet="Aya. Gambieras",
+    neck="Stone Gorget",
+    waist="Swift Belt",
+    left_ear="Ethereal Earring",
+    right_ear="Loquac. Earring",
+    left_ring="Shneddick Ring",
+    right_ring="Tamas Ring",
+    back="Merciful Cape",
+}

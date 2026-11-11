@@ -10,7 +10,7 @@ sets.default = {
 	range = "Chakram",
 	head = "Mummu Bonnet",
 	body = "Olorun Harness",
-	hands = "SV Gauntlets +1",
+	hands = "Olorun Gloves",
 	legs = "SV Loincloth +1",
 	feet = "Olorun boots",
 	neck = "Sanctity necklace",
@@ -20,7 +20,7 @@ sets.default = {
 	left_ring = "Mummu Ring",
 	right_ring = "Meghanada ring",
 	back = { name = "Mecisto. Mantle", augments = { "Cap. Point+38%", "MP+25", "Mag. Acc.+3", "DEF+3" } },
-} 
+}
 
 sets.idle = set_combine(sets.default, {
 	left_ring = "Shneddick Ring",

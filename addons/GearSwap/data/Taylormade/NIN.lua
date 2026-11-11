@@ -5,20 +5,20 @@ include("common")
 -- Do not delete this line.
 sets = {}
 sets.default = {
-	main = "Ichi-an",
-	sub = "Ichi-an",
+	main = "Izuna",
+	sub = "Izuna",
 	range = "Lightning Bow +1",
 	ammo = "Scorpion Arrow",
-	head = "Aurore Beret",
-	body = "Aurore Doublet",
-	hands = "Aurore Gloves",
-	legs = "Aurore Brais",
-	feet = "Aurore Gaiters",
-	neck = "Sanctity necklace",
-	waist = "Swift Belt",
-	left_ear = "Suppanomimi",
-	right_ear = "Brutal Earring",
-	left_ring = "Echad Ring",
+	head = "Mummu Bonnet",
+	body = "Olorun Harness",
+	hands = "SV Gauntlets +1",
+	legs = "SV Loincloth +1",
+	feet = "SV Gaiters +1",
+	neck = "Gaudryi Necklace",
+	waist = "Gerdr Belt",
+	left_ear = "Brutal Earring",
+	right_ear = "Alabaster Earring",
+	left_ring = "Jaeger Ring",
 	right_ring = "Rajas Ring",
 	back = "Bushido Cape",
 }
@@ -30,9 +30,6 @@ sets.midcast.MagicBurst = set_combine(sets.default, {
 	left_ear = "Moldavite Earring",
 	right_ear = "Phantom Earring",
 })
-
--- Keep the short name available for any existing macros or references.
-sets.mb = sets.midcast.MagicBurst
 
 sets.idle = set_combine(sets.default, {
 	left_ring = "Shneddick Ring",

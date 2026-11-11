@@ -24,7 +24,7 @@
                 <target>false</target>
             </party>
             <self>
-                <always>false</always>
+                <always>true</always>
                 <combat>false</combat>
                 <target>false</target>
             </self>
@@ -67,5 +67,8 @@
 
             </sub>
         </replacements>
+        <taylormade>
+
+        </taylormade>
     </global>
 </settings>

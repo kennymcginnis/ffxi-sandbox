@@ -1,0 +1,16 @@
+sets.default = {
+    main="Sapara of Trials",
+    sub="Joyeuse",
+    head="Nashira Turban",
+    body="Nashira Manteel",
+    hands="Nashira Gages",
+    legs="Nashira Seraweels",
+    feet="Nashira Crackows",
+    neck="Stone Gorget",
+    waist="Swift Belt",
+    left_ear="Ethereal Earring",
+    right_ear="Loquac. Earring",
+    left_ring="Echad Ring",
+    right_ring="Tamas Ring",
+    back="Merciful Cape",
+}

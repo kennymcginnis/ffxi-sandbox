@@ -33,6 +33,9 @@ function taylormade_common.equip_status(status)
 	if status == "Idle" then
 		taylormade_common.debug("Gear debug: Idle status; equipping idle set.")
 		equip(sets.idle or sets.default)
+	elseif status == "Engaged" then
+		taylormade_common.debug("Gear debug: Engaged status; equipping engaged set.")
+		equip(sets.engaged or sets.default)
 	elseif status == "Resting" then
 		if sets.resting then
 			taylormade_common.debug("Gear debug: Resting status; equipping resting set.")
@@ -66,4 +69,14 @@ function aftercast(spell)
 		job_aftercast(spell)
 	end
 	taylormade_common.equip_status(player.status)
+end
+
+function job_self_command(commandArgs, eventArgs)
+	if commandArgs[1] == "warp" then
+		send_command('@input /equip ring2 "Warp Ring"')
+		-- Allow time for the ring's equip delay before using
+		coroutine.schedule(function()
+			send_command('@input /item "Warp Ring" <me>')
+		end, 11)
+	end
 end

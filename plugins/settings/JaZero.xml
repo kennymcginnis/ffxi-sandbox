@@ -1,3 +1,12 @@
 <settings>
-    <global />
+    <global>
+        <!--Disables collision with other players and mobs.-->
+        <DisableCollision>true</DisableCollision>
+        <!--Sets the time of inactivity (in seconds) after which player collision is disabled. Ignored, if DisableCollision is set to true.-->
+        <PlayerCollisionDelay>30</PlayerCollisionDelay>
+        <!--Disabled locking on spells, job abilities and weapon skills.-->
+        <DisableActionLock>true</DisableActionLock>
+        <!--Disables engage/disengage locking. Only works if action locking is also disabled.-->
+        <DisableEngageLock>true</DisableEngageLock>
+    </global>
 </settings>

@@ -1,87 +1,67 @@
 {
     "PANEL_PORT": 62650,
     "WEB_PORT": 8080,
-    "GEMINI_API_KEY": "AQ.Ab8RN6LsoW3yPg52IhRUICIqAwImDt3i4bW8OpsS85ackL9g6w",
+    "GEMINI_API_KEY": "",
     "MODEL_NAME": "gemini-2.5-flash",
     "USER_LANG": "EN",
     "LOCK_PASSWORD": "password123",
     "LOCK_OPACITY": 0.2,
-    "LEADER_NAME": "Eloleto",
+    "LEADER_NAME": "Taylormade",
     "CHARACTERS": [
-        "Eloleto",
-        "Loeleto",
-        "Oletole"
+        "Taylormade",
+        "Socoxak"
     ],
-    "SE_PASSWORD": "Thef4t4re",
+    "SE_PASSWORD": "",
     "POL_INITIAL_DELAY": 12.0,
     "POL_ACCOUNTS": {
-        "Eloleto": 1,
-        "Loeleto": 2,
-        "Oletole": 3
+        "Taylormade": 1,
+        "Socoxak": 2
     },
-    "WINDOWER_PATH": "C:\\ffxi\\Windower.exe",
+    "WINDOWER_PATH": "C:\\Program Files (x86)\\Windower\\Windower.exe",
     "WINDOWER_PROFILES": {
-        "Eloleto": "Eloleto",
-        "Loeleto": "Loeleto",
-        "Oletole": "Oletole"
+        "Taylormade": "Taylormade",
+        "Socoxak": "Socoxak"
     },
     "MAIN_TV_POS": {
-        "x": 268,
-        "y": -1080,
+        "x": 1920,
+        "y": 0,
         "width": 1920,
         "height": 1080
     },
     "SLOTS": {
-        "Eloleto": {
-            "x": 1720,
+        "Taylormade": {
+            "x": -1920,
             "y": 0,
-            "width": 840,
-            "height": 470
+            "width": 1920,
+            "height": 1080
         },
-        "Loeleto": {
-            "x": 1720,
-            "y": 480,
-            "width": 840,
-            "height": 470
-        },
-        "Oletole": {
-            "x": 1720,
-            "y": 960,
-            "width": 840,
-            "height": 470
+        "Socoxak": {
+            "x": 0,
+            "y": 0,
+            "width": 1920,
+            "height": 1080
         }
     },
     "TRUST_MODES": {
-        "Eloleto": {
+        "Taylormade": {
             "AutoBuffMode": "Off",
-            "AutoHealMode": "Off",
+            "AutoHealMode": "Emergency",
             "AutoStatusRemovalMode": "Off",
-            "AutoEngageMode": "Off",
-            "AutoSkillchainMode": "Off",
-            "AutoFollowMode": "Always",
-            "AutoCampMode": "Off",
-            "AutoPullMode": "Off",
-            "CombatMode": "Off",
-            "FlankMode": "Off"
-        },
-        "Loeleto": {
-            "AutoBuffMode": "Auto",
-            "AutoHealMode": "Auto",
-            "AutoStatusRemovalMode": "Auto",
             "AutoEngageMode": "Always",
-            "AutoSkillchainMode": "Off",
+            "AutoSkillchainMode": "Spam",
             "AutoFollowMode": "Always",
             "AutoCampMode": "Off",
             "AutoPullMode": "Off",
             "CombatMode": "Auto",
-            "FlankMode": "Off"
+            "FlankMode": "Off",
+            "AutoSongMode": "Dummy"
         },
-        "Oletole": {
+        "Socoxak": {
             "AutoBuffMode": "Auto",
-            "AutoHealMode": "Off",
-            "AutoStatusRemovalMode": "Off",
+            "AutoHealMode": "Auto",
+            "AutoStatusRemovalMode": "Auto",
             "AutoEngageMode": "Always",
-            "AutoSkillchainMode": "Auto",
+            "AutoSkillchainMode": "Spam",
             "AutoFollowMode": "Always",
             "AutoCampMode": "Off",
             "AutoPullMode": "Off",

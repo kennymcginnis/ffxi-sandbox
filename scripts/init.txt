@@ -12,4 +12,4 @@ bind ^v paste
 
 exec "aliases.txt"
 
-load Guildwork
+du blinkingall on

@@ -1,0 +1,16 @@
+sets.default = {
+    main="Thief's Knife",
+    sub="Kaja Knife",
+    head="Mummu Bonnet",
+    body="Olorun Harness",
+    hands="Olorun Gloves",
+    legs="SV Loincloth +1",
+    feet="Olorun Boots",
+    neck="Sanctity Necklace",
+    waist="Gerdr Belt",
+    left_ear="Brutal Earring",
+    right_ear="Alabaster Earring",
+    left_ring="Mummu Ring",
+    right_ring="Meghanada Ring",
+    back={ name="Mecisto. Mantle", augments={'Cap. Point+38%','MP+25','Mag. Acc.+3','DEF+3',}},
+}

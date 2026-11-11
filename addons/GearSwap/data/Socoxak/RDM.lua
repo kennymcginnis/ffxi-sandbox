@@ -5,24 +5,27 @@ include("common")
 -- Do not delete this line.
 sets = {}
 sets.default = {
-	main = "Joyeuse",
-	sub = "Genbu's Shield",
-	head = "Nashira Turban",
-	body = "Nashira Manteel",
-	hands = "Nashira Gages",
-	legs = "Nashira Seraweels",
-	feet = "Nashira Crackows",
+	main = "Vorpal Sword",
+	sub = "Ammurapi Shield",
+	range = "Mamoolbane",
+	head = "Aya. Zucchetto",
+	body = "Egbesu Frock",
+	hands = "Egbesu Mitts",
+	legs = "Egbesu Slops",
+	feet = "Aya. Gambieras",
 	neck = "Stone Gorget",
 	waist = "Swift Belt",
 	left_ear = "Ethereal Earring",
 	right_ear = "Loquac. Earring",
-	left_ring = "Jelly Ring",
+	left_ring = "Shneddick Ring",
 	right_ring = "Tamas Ring",
 	back = "Merciful Cape",
 }
 
 sets.idle = set_combine(sets.default, {
 	left_ring = "Shneddick Ring",
+	-- legs = "Track Pants +1",
+	-- feet = empty,
 })
 
 sets.resting = set_combine(sets.default, {
@@ -31,10 +34,6 @@ sets.resting = set_combine(sets.default, {
 	feet = "Numerist Pumps",
 	neck = "Rep. Silver Medal",
 	waist = "Tarutaru Sash",
-})
-
-sets.learning = set_combine(sets.default, {
-	hands = "Magus Bazubands",
 })
 
 function get_sets()
